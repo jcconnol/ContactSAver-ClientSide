@@ -15,13 +15,13 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.uark.uarkregisterapp.adapters.ProductListAdapter;
+import edu.uark.uarkregisterapp.adapters.ContactListAdapter;
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.Product;
-import edu.uark.uarkregisterapp.models.api.services.ProductService;
-import edu.uark.uarkregisterapp.models.transition.ProductTransition;
+import edu.uark.uarkregisterapp.models.api.services.ContactService;
+import edu.uark.uarkregisterapp.models.transition.ContactTransition;
 
-public class ProductsListingActivity extends AppCompatActivity {
+public class ContactsListingActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,17 +34,17 @@ public class ProductsListingActivity extends AppCompatActivity {
 		}
 
 		this.products = new ArrayList<>();
-		this.productListAdapter = new ProductListAdapter(this, this.products);
+		this.productListAdapter = new ContactListAdapter(this, this.products);
 
 		this.getProductsListView().setAdapter(this.productListAdapter);
 		this.getProductsListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(getApplicationContext(), ProductViewActivity.class);
+				Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
 
 				intent.putExtra(
 					getString(R.string.intent_extra_product),
-					new ProductTransition((Product) getProductsListView().getItemAtPosition(position))
+					new ContactTransition((Product) getProductsListView().getItemAtPosition(position))
 				);
 
 				startActivity(intent);
@@ -71,7 +71,7 @@ public class ProductsListingActivity extends AppCompatActivity {
 
 		@Override
 		protected ApiResponse<List<Product>> doInBackground(Void... params) {
-			ApiResponse<List<Product>> apiResponse = (new ProductService()).getProducts();
+			ApiResponse<List<Product>> apiResponse = (new ContactService()).getProducts();
 
 			if (apiResponse.isValidResponse()) {
 				products.clear();
@@ -90,7 +90,7 @@ public class ProductsListingActivity extends AppCompatActivity {
 			this.loadingProductsAlert.dismiss();
 
 			if (!apiResponse.isValidResponse()) {
-				new AlertDialog.Builder(ProductsListingActivity.this).
+				new AlertDialog.Builder(ContactsListingActivity.this).
 					setMessage(R.string.alert_dialog_products_load_failure).
 					setPositiveButton(
 						R.string.button_dismiss,
@@ -108,12 +108,12 @@ public class ProductsListingActivity extends AppCompatActivity {
 		private AlertDialog loadingProductsAlert;
 
 		private RetrieveProductsTask() {
-			this.loadingProductsAlert = new AlertDialog.Builder(ProductsListingActivity.this).
+			this.loadingProductsAlert = new AlertDialog.Builder(ContactsListingActivity.this).
 				setMessage(R.string.alert_dialog_products_loading).
 				create();
 		}
 	}
 
 	private List<Product> products;
-	private ProductListAdapter productListAdapter;
+	private ContactListAdapter productListAdapter;
 }

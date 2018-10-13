@@ -13,10 +13,10 @@ import java.util.UUID;
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.Product;
 import edu.uark.uarkregisterapp.models.api.enums.ApiObject;
-import edu.uark.uarkregisterapp.models.api.enums.ProductApiMethod;
+import edu.uark.uarkregisterapp.models.api.enums.ContactApiMethod;
 import edu.uark.uarkregisterapp.models.api.interfaces.PathElementInterface;
 
-public class ProductService extends BaseRemoteService {
+public class ContactService extends BaseRemoteService {
 	public ApiResponse<Product> getProduct(UUID productId) {
 		return this.readProductDetailsFromResponse(
 			this.<Product>performGetRequest(
@@ -29,7 +29,7 @@ public class ProductService extends BaseRemoteService {
 		return this.readProductDetailsFromResponse(
 			this.<Product>performGetRequest(
 				this.buildPath(
-					(new PathElementInterface[] { ProductApiMethod.BY_LOOKUP_CODE })
+					(new PathElementInterface[] { ContactApiMethod.BY_LOOKUP_CODE })
 					, productLookupCode
 				)
 			)
@@ -98,5 +98,5 @@ public class ProductService extends BaseRemoteService {
 		return apiResponse;
 	}
 
-	public ProductService() { super(ApiObject.PRODUCT); }
+	public ContactService() { super(ApiObject.PRODUCT); }
 }

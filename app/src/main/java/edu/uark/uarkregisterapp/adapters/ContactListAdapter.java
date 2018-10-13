@@ -14,7 +14,7 @@ import java.util.Locale;
 import edu.uark.uarkregisterapp.R;
 import edu.uark.uarkregisterapp.models.api.Product;
 
-public class ProductListAdapter extends ArrayAdapter<Product> {
+public class ContactListAdapter extends ArrayAdapter<Product> {
 	@NonNull
 	@Override
 	public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -40,7 +40,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 		return view;
 	}
 
-	public ProductListAdapter(Context context, List<Product> products) {
+	public ContactListAdapter(Context context, List<Product> products) {
 		super(context, R.layout.list_view_item_product, products);
 	}
 }

@@ -2,7 +2,7 @@ package edu.uark.uarkregisterapp.models.api.fields;
 
 import edu.uark.uarkregisterapp.models.api.interfaces.FieldNameInterface;
 
-public enum ProductFieldName implements FieldNameInterface {
+public enum ContactFieldName implements FieldNameInterface {
 	ID("id"),
 	LOOKUP_CODE("lookupCode"),
 	COUNT("count"),
@@ -15,7 +15,7 @@ public enum ProductFieldName implements FieldNameInterface {
 		return this.fieldName;
 	}
 
-	ProductFieldName(String fieldName) {
+	ContactFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
 }

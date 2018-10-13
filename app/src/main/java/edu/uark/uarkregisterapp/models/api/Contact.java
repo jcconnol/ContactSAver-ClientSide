@@ -10,17 +10,17 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
-import edu.uark.uarkregisterapp.models.api.fields.ProductFieldName;
+import edu.uark.uarkregisterapp.models.api.fields.ContactFieldName;
 import edu.uark.uarkregisterapp.models.api.interfaces.ConvertToJsonInterface;
 import edu.uark.uarkregisterapp.models.api.interfaces.LoadFromJsonInterface;
-import edu.uark.uarkregisterapp.models.transition.ProductTransition;
+import edu.uark.uarkregisterapp.models.transition.ContactTransition;
 
-public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Product> {
+public class Contact implements ConvertToJsonInterface, LoadFromJsonInterface<Contact> {
 	private UUID id;
 	public UUID getId() {
 		return this.id;
 	}
-	public Product setId(UUID id) {
+	public Contact setId(UUID id) {
 		this.id = id;
 		return this;
 	}
@@ -29,7 +29,7 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 	public String getLookupCode() {
 		return this.lookupCode;
 	}
-	public Product setLookupCode(String lookupCode) {
+	public Contact setLookupCode(String lookupCode) {
 		this.lookupCode = lookupCode;
 		return this;
 	}
@@ -38,7 +38,7 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 	public int getCount() {
 		return this.count;
 	}
-	public Product setCount(int count) {
+	public Contact setCount(int count) {
 		this.count = count;
 		return this;
 	}
@@ -47,22 +47,22 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 	public Date getCreatedOn() {
 		return this.createdOn;
 	}
-	public Product setCreatedOn(Date createdOn) {
+	public Contact setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 		return this;
 	}
 
 	@Override
-	public Product loadFromJson(JSONObject rawJsonObject) {
-		String value = rawJsonObject.optString(ProductFieldName.ID.getFieldName());
+	public Contact loadFromJson(JSONObject rawJsonObject) {
+		String value = rawJsonObject.optString(ContactFieldName.ID.getFieldName());
 		if (!StringUtils.isBlank(value)) {
 			this.id = UUID.fromString(value);
 		}
 
-		this.lookupCode = rawJsonObject.optString(ProductFieldName.LOOKUP_CODE.getFieldName());
-		this.count = rawJsonObject.optInt(ProductFieldName.COUNT.getFieldName());
+		this.lookupCode = rawJsonObject.optString(ContactFieldName.LOOKUP_CODE.getFieldName());
+		this.count = rawJsonObject.optInt(ContactFieldName.COUNT.getFieldName());
 
-		value = rawJsonObject.optString(ProductFieldName.CREATED_ON.getFieldName());
+		value = rawJsonObject.optString(ContactFieldName.CREATED_ON.getFieldName());
 		if (!StringUtils.isBlank(value)) {
 			try {
 				this.createdOn = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US).parse(value);
@@ -79,10 +79,10 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 		JSONObject jsonObject = new JSONObject();
 
 		try {
-			jsonObject.put(ProductFieldName.ID.getFieldName(), this.id.toString());
-			jsonObject.put(ProductFieldName.LOOKUP_CODE.getFieldName(), this.lookupCode);
-			jsonObject.put(ProductFieldName.COUNT.getFieldName(), this.count);
-			jsonObject.put(ProductFieldName.CREATED_ON.getFieldName(), (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)).format(this.createdOn));
+			jsonObject.put(ContactFieldName.ID.getFieldName(), this.id.toString());
+			jsonObject.put(ContactFieldName.LOOKUP_CODE.getFieldName(), this.lookupCode);
+			jsonObject.put(ContactFieldName.COUNT.getFieldName(), this.count);
+			jsonObject.put(ContactFieldName.CREATED_ON.getFieldName(), (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)).format(this.createdOn));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -90,17 +90,17 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 		return jsonObject;
 	}
 
-	public Product() {
+	public Contact() {
 		this.count = -1;
 		this.lookupCode = "";
 		this.id = new UUID(0, 0);
 		this.createdOn = new Date();
 	}
 
-	public Product(ProductTransition productTransition) {
-		this.id = productTransition.getId();
-		this.count = productTransition.getCount();
-		this.createdOn = productTransition.getCreatedOn();
-		this.lookupCode = productTransition.getLookupCode();
+	public Contact(ContactTransition contactTransition) {
+		this.id = contactTransition.getId();
+		this.count = contactTransition.getCount();
+		this.createdOn = contactTransition.getCreatedOn();
+		this.lookupCode = contactTransition.getLookupCode();
 	}
 }

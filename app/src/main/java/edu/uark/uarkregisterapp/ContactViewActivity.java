@@ -20,10 +20,10 @@ import java.util.UUID;
 
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.Product;
-import edu.uark.uarkregisterapp.models.api.services.ProductService;
-import edu.uark.uarkregisterapp.models.transition.ProductTransition;
+import edu.uark.uarkregisterapp.models.api.services.ContactService;
+import edu.uark.uarkregisterapp.models.transition.ContactTransition;
 
-public class ProductViewActivity extends AppCompatActivity {
+public class ContactViewActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,7 +35,7 @@ public class ProductViewActivity extends AppCompatActivity {
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 
-		this.productTransition = this.getIntent().getParcelableExtra(this.getString(R.string.intent_extra_product));
+		this.contactTransition = this.getIntent().getParcelableExtra(this.getString(R.string.intent_extra_product));
 	}
 
 	@Override
@@ -54,15 +54,15 @@ public class ProductViewActivity extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 
-		if (!this.productTransition.getId().equals(new UUID(0, 0))) {
+		if (!this.contactTransition.getId().equals(new UUID(0, 0))) {
 			this.getDeleteImageButton().setVisibility(View.VISIBLE);
 		} else {
 			this.getDeleteImageButton().setVisibility(View.INVISIBLE);
 		}
-		this.getProductLookupCodeEditText().setText(this.productTransition.getLookupCode());
-		this.getProductCountEditText().setText(String.format(Locale.getDefault(), "%d", this.productTransition.getCount()));
+		this.getProductLookupCodeEditText().setText(this.contactTransition.getLookupCode());
+		this.getProductCountEditText().setText(String.format(Locale.getDefault(), "%d", this.contactTransition.getCount()));
 		this.getProductCreatedOnEditText().setText(
-			(new SimpleDateFormat("MM/dd/yyyy", Locale.US)).format(this.productTransition.getCreatedOn())
+			(new SimpleDateFormat("MM/dd/yyyy", Locale.US)).format(this.contactTransition.getCreatedOn())
 		);
 	}
 
@@ -163,20 +163,20 @@ public class ProductViewActivity extends AppCompatActivity {
 
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			Product product = (new Product()).
-				setId(productTransition.getId()).
+			Contact contact = (new Contact()).
+				setId(contactTransition.getId()).
 				setLookupCode(getProductLookupCodeEditText().getText().toString()).
 				setCount(Integer.parseInt(getProductCountEditText().getText().toString()));
 
 			ApiResponse<Product> apiResponse = (
-				(product.getId().equals(new UUID(0, 0)))
-					? (new ProductService()).createProduct(product)
-					: (new ProductService()).updateProduct(product)
+				(contact.getId().equals(new UUID(0, 0)))
+					? (new ContactService()).createProduct(contact)
+					: (new ContactService()).updateProduct(contact)
 			);
 
 			if (apiResponse.isValidResponse()) {
-				productTransition.setCount(apiResponse.getData().getCount());
-				productTransition.setLookupCode(apiResponse.getData().getLookupCode());
+				contactTransition.setCount(apiResponse.getData().getCount());
+				contactTransition.setLookupCode(apiResponse.getData().getLookupCode());
 			}
 
 			return apiResponse.isValidResponse();
@@ -189,12 +189,12 @@ public class ProductViewActivity extends AppCompatActivity {
 			savingProductAlert.dismiss();
 
 			if (successfulSave) {
-				message = getString(R.string.alert_dialog_product_save_success);
+				message = getString(R.string.alert_dialog_contact_save_success);
 			} else {
-				message = getString(R.string.alert_dialog_product_save_failure);
+				message = getString(R.string.alert_dialog_contact_save_failure);
 			}
 
-			new AlertDialog.Builder(ProductViewActivity.this).
+			new AlertDialog.Builder(ContactViewActivity.this).
 				setMessage(message).
 				setPositiveButton(
 					R.string.button_dismiss,
@@ -211,13 +211,13 @@ public class ProductViewActivity extends AppCompatActivity {
 		private AlertDialog savingProductAlert;
 
 		private SaveProductTask() {
-			this.savingProductAlert = new AlertDialog.Builder(ProductViewActivity.this).
-				setMessage(R.string.alert_dialog_product_save).
+			this.savingProductAlert = new AlertDialog.Builder(ContactViewActivity.this).
+				setMessage(R.string.alert_dialog_contact_save).
 				create();
 		}
 	}
 
-	private class DeleteProductTask extends AsyncTask<Void, Void, Boolean> {
+	private class DeleteContactTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
 		protected void onPreExecute() {
 			this.deletingProductAlert.show();
@@ -225,8 +225,8 @@ public class ProductViewActivity extends AppCompatActivity {
 
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			return (new ProductService())
-				.deleteProduct(productTransition.getId())
+			return (new ContactService())
+				.deleteProduct(contactTransition.getId())
 				.isValidResponse();
 		}
 
@@ -237,12 +237,12 @@ public class ProductViewActivity extends AppCompatActivity {
 			deletingProductAlert.dismiss();
 
 			if (successfulSave) {
-				message = getString(R.string.alert_dialog_product_delete_success);
+				message = getString(R.string.alert_dialog_contact_delete_success);
 			} else {
-				message = getString(R.string.alert_dialog_product_delete_failure);
+				message = getString(R.string.alert_dialog_contact_delete_failure);
 			}
 
-			new AlertDialog.Builder(ProductViewActivity.this).
+			new AlertDialog.Builder(ContactViewActivity.this).
 				setMessage(message).
 				setPositiveButton(
 					R.string.button_dismiss,
@@ -262,11 +262,11 @@ public class ProductViewActivity extends AppCompatActivity {
 		private AlertDialog deletingProductAlert;
 
 		private DeleteProductTask() {
-			this.deletingProductAlert = new AlertDialog.Builder(ProductViewActivity.this).
-				setMessage(R.string.alert_dialog_product_delete).
+			this.deletingProductAlert = new AlertDialog.Builder(ContactViewActivity.this).
+				setMessage(R.string.alert_dialog_contact_delete).
 				create();
 		}
 	}
 
-	private ProductTransition productTransition;
+	private ContactTransition contactTransition;
 }
