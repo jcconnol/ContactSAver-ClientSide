@@ -1,8 +1,11 @@
 package edu.uark.uarkregisterapp.models.api.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.uark.uarkregisterapp.models.api.interfaces.PathElementInterface;
 
-public enum ContactApiMethod implements PathElementInterface {
+public enum ProductApiMethod implements PathElementInterface {
 	NONE(""),
 	BY_LOOKUP_CODE("byLookupCode");
 
@@ -13,7 +16,7 @@ public enum ContactApiMethod implements PathElementInterface {
 
 	private String value;
 
-	ContactApiMethod(String value) {
+	ProductApiMethod(String value) {
 		this.value = value;
 	}
 }

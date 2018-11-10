@@ -12,12 +12,12 @@ import edu.uark.uarkregisterapp.commands.converters.ByteToUUIDConverterCommand;
 import edu.uark.uarkregisterapp.commands.converters.UUIDToByteConverterCommand;
 import edu.uark.uarkregisterapp.models.api.Product;
 
-public class ContactTransition implements Parcelable {
+public class ProductTransition implements Parcelable {
 	private UUID id;
 	public UUID getId() {
 		return this.id;
 	}
-	public ContactTransition setId(UUID id) {
+	public ProductTransition setId(UUID id) {
 		this.id = id;
 		return this;
 	}
@@ -26,7 +26,7 @@ public class ContactTransition implements Parcelable {
 	public String getLookupCode() {
 		return this.lookupCode;
 	}
-	public ContactTransition setLookupCode(String lookupCode) {
+	public ProductTransition setLookupCode(String lookupCode) {
 		this.lookupCode = lookupCode;
 		return this;
 	}
@@ -35,7 +35,7 @@ public class ContactTransition implements Parcelable {
 	public int getCount() {
 		return this.count;
 	}
-	public ContactTransition setCount(int count) {
+	public ProductTransition setCount(int count) {
 		this.count = count;
 		return this;
 	}
@@ -44,7 +44,7 @@ public class ContactTransition implements Parcelable {
 	public Date getCreatedOn() {
 		return this.createdOn;
 	}
-	public ContactTransition setCreatedOn(Date createdOn) {
+	public ProductTransition setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 		return this;
 	}
@@ -62,31 +62,31 @@ public class ContactTransition implements Parcelable {
 		return 0;
 	}
 
-	public static final Parcelable.Creator<ContactTransition> CREATOR = new Parcelable.Creator<ContactTransition>() {
-		public ContactTransition createFromParcel(Parcel productTransitionParcel) {
-			return new ContactTransition(productTransitionParcel);
+	public static final Parcelable.Creator<ProductTransition> CREATOR = new Parcelable.Creator<ProductTransition>() {
+		public ProductTransition createFromParcel(Parcel productTransitionParcel) {
+			return new ProductTransition(productTransitionParcel);
 		}
 
-		public ContactTransition[] newArray(int size) {
-			return new ContactTransition[size];
+		public ProductTransition[] newArray(int size) {
+			return new ProductTransition[size];
 		}
 	};
 
-	public ContactTransition() {
+	public ProductTransition() {
 		this.count = -1;
 		this.id = new UUID(0, 0);
 		this.createdOn = new Date();
 		this.lookupCode = StringUtils.EMPTY;
 	}
 
-	public ContactTransition(Product product) {
+	public ProductTransition(Product product) {
 		this.id = product.getId();
 		this.count = product.getCount();
 		this.createdOn = product.getCreatedOn();
 		this.lookupCode = product.getLookupCode();
 	}
 
-	private ContactTransition(Parcel productTransitionParcel) {
+	private ProductTransition(Parcel productTransitionParcel) {
 		this.id = (new ByteToUUIDConverterCommand()).setValueToConvert(productTransitionParcel.createByteArray()).execute();
 		this.lookupCode = productTransitionParcel.readString();
 		this.count = productTransitionParcel.readInt();
