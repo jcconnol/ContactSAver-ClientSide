@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        this.getEmployeeWelcomeTextView().setText("Welcome " + this.employeeTransition.getFirstName() + " (" + this.employeeTransition.getEmployeeId() + ")!");
+        String welcomeText = "Welcome " + this.employeeTransition.getFirstName() + " (" + this.employeeTransition.getEmployeeUsername() + ")!";
+        this.getEmployeeWelcomeTextView().setText(welcomeText);
     }
 
     public void beginTransactionButtonOnClick(View view) {

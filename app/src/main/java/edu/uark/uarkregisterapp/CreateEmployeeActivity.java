@@ -54,6 +54,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
                 .setActive(true)
                 .setFirstName(this.getFirstNameEditText().getText().toString())
                 .setLastName(this.getLastNameEditText().getText().toString())
+                //.setUsername(this.getUsernameEditText().getText().toString())
                 .setPassword(this.getPasswordEditText().getText().toString())
                 .setClassification(EmployeeClassification.GENERAL_MANAGER)
         );
@@ -65,6 +66,10 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 
     private EditText getLastNameEditText() {
         return (EditText) this.findViewById(R.id.edit_text_employee_create_last_name);
+    }
+
+    private EditText getUsernameEditText(){
+        return (EditText) this.findViewById(R.id.edit_text_employee_create_username);
     }
 
     private EditText getPasswordEditText() {
@@ -86,6 +91,11 @@ public class CreateEmployeeActivity extends AppCompatActivity {
         if (validInput && StringUtils.isBlank(this.getLastNameEditText().getText().toString())) {
             this.displayValidationAlert(R.string.alert_dialog_employee_create_validation_last_name);
             this.getLastNameEditText().requestFocus();
+            validInput = false;
+        }
+        if(validInput && StringUtils.isBlank(this.getUsernameEditText().getText().toString())){
+            this.displayValidationAlert(R.string.alert_dialog_employee_create_validation_username);
+            this.getUsernameEditText().requestFocus();
             validInput = false;
         }
         if (validInput && StringUtils.isBlank(this.getPasswordEditText().getText().toString())) {

@@ -23,12 +23,12 @@ public class EmployeeTransition implements Parcelable {
         return this;
     }
 
-    private String employeeId;
-    public String getEmployeeId() {
-        return this.employeeId;
+    private String employeeUsername;
+    public String getEmployeeUsername() {
+        return this.employeeUsername;
     }
-    public EmployeeTransition setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
+    public EmployeeTransition setEmployeeUsername(String employeeUsername) {
+        this.employeeUsername = employeeUsername;
         return this;
     }
 
@@ -97,7 +97,7 @@ public class EmployeeTransition implements Parcelable {
     @Override
     public void writeToParcel(Parcel destination, int flags) {
         destination.writeByteArray((new UUIDToByteConverterCommand()).setValueToConvert(this.id).execute());
-        destination.writeString(this.employeeId);
+        destination.writeString(this.employeeUsername);
         destination.writeString(this.firstName);
         destination.writeString(this.lastName);
         destination.writeString(this.password);
@@ -130,7 +130,7 @@ public class EmployeeTransition implements Parcelable {
         this.lastName = StringUtils.EMPTY;
         this.password = StringUtils.EMPTY;
         this.firstName = StringUtils.EMPTY;
-        this.employeeId = StringUtils.EMPTY;
+        this.employeeUsername = StringUtils.EMPTY;
         this.classification = EmployeeClassification.NOT_DEFINED;
     }
 
@@ -142,13 +142,13 @@ public class EmployeeTransition implements Parcelable {
         this.createdOn = employee.getCreatedOn();
         this.firstName = employee.getFirstName();
         this.managerId = employee.getManagerId();
-        this.employeeId = employee.getEmployeeId();
+        this.employeeUsername = employee.getUsername();
         this.classification = employee.getClassification();
     }
 
     public EmployeeTransition(Parcel employeeTransitionParcel) {
         this.id = (new ByteToUUIDConverterCommand()).setValueToConvert(employeeTransitionParcel.createByteArray()).execute();
-        this.employeeId = employeeTransitionParcel.readString();
+        this.employeeUsername = employeeTransitionParcel.readString();
         this.firstName = employeeTransitionParcel.readString();
         this.lastName = employeeTransitionParcel.readString();
         this.password = employeeTransitionParcel.readString();
