@@ -50,7 +50,7 @@
 
     <EditText
         android:id="@+id/edit_text_employee_create_password_confirm"
-        android:hint="@string/edit_text_hint_employee_create_username"
+        android:hint="@string/edit_text_hint_employee_create_password_confirm"
         android:inputType="textPassword"
         android:layout_below="@+id/edit_text_employee_create_password"
         android:layout_width="match_parent"
