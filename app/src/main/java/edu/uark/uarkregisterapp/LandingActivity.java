@@ -56,7 +56,7 @@ public class LandingActivity extends AppCompatActivity {
 
 		(new SignInTask()).execute(
 			(new EmployeeLogin())
-				.setEmployeeUsername(this.getEmployeeUsernameEditText().getText().toString())
+				.setEmployeeId(this.getEmployeeUsernameEditText().getText().toString())
 				.setPassword(this.getPasswordEditText().getText().toString())
 		);
 	}

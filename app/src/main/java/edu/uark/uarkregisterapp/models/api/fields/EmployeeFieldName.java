@@ -4,7 +4,7 @@ import edu.uark.uarkregisterapp.models.api.interfaces.FieldNameInterface;
 
 public enum EmployeeFieldName implements FieldNameInterface {
     ID("id"),
-    EMPLOYEE_USERNAME("employeeUsername"),
+    EMPLOYEE_ID("employeeId"),
     FIRST_NAME("firstName"),
     LAST_NAME("lastName"),
     PASSWORD("password"),

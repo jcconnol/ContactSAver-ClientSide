@@ -8,12 +8,12 @@ import edu.uark.uarkregisterapp.models.api.fields.EmployeeLoginFieldName;
 import edu.uark.uarkregisterapp.models.api.interfaces.ConvertToJsonInterface;
 
 public class EmployeeLogin implements ConvertToJsonInterface {
-    private String employeeUsername;
+    private String employeeId;
     public String getEmployeeUsername() {
-        return this.employeeUsername;
+        return this.employeeId;
     }
-    public EmployeeLogin setEmployeeUsername(String employeeUsername) {
-        this.employeeUsername = employeeUsername;
+    public EmployeeLogin setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
         return this;
     }
     private String password;
@@ -30,7 +30,7 @@ public class EmployeeLogin implements ConvertToJsonInterface {
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.put(EmployeeLoginFieldName.EMPLOYEE_USERNAME.getFieldName(), this.employeeUsername);
+            jsonObject.put(EmployeeLoginFieldName.EMPLOYEE_ID.getFieldName(), this.employeeId);
             jsonObject.put(EmployeeLoginFieldName.PASSWORD.getFieldName(), this.password);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -41,6 +41,6 @@ public class EmployeeLogin implements ConvertToJsonInterface {
 
     public EmployeeLogin() {
         this.password = StringUtils.EMPTY;
-        this.employeeUsername = StringUtils.EMPTY;
+        this.employeeId = StringUtils.EMPTY;
     }
 }

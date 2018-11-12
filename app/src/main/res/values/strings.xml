@@ -43,6 +43,7 @@
     <string name="alert_dialog_employee_create">Creating employee&#8320;</string>
     <string name="alert_dialog_employee_sign_in_failed">Employee sign in failed. Please try again.</string>
     <string name="alert_dialog_employee_create_failed">The employee could not be created. Please try again.</string>
+    <string name="alert_dialog_employee_create_username_nonunique">Employee username already exists. Please Choose another</string>
     <string name="alert_dialog_products_loading">Loading Products</string>
     <string name="alert_dialog_product_save">Saving Product&#8320;</string>
     <string name="alert_dialog_product_save_success">The product was successfully saved.</string>

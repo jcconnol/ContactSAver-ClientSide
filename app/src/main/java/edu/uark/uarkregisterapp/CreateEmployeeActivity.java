@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import org.apache.commons.lang3.StringUtils;
 
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
+import edu.uark.uarkregisterapp.models.api.fields.ApiResponseFieldName;
 import edu.uark.uarkregisterapp.models.api.Employee;
 import edu.uark.uarkregisterapp.models.api.enums.EmployeeClassification;
 import edu.uark.uarkregisterapp.models.api.services.EmployeeService;
@@ -54,7 +56,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
                 .setActive(true)
                 .setFirstName(this.getFirstNameEditText().getText().toString())
                 .setLastName(this.getLastNameEditText().getText().toString())
-                //.setUsername(this.getUsernameEditText().getText().toString())
+                .setEmployeeId(this.getUsernameEditText().getText().toString())
                 .setPassword(this.getPasswordEditText().getText().toString())
                 .setClassification(EmployeeClassification.GENERAL_MANAGER)
         );
@@ -130,6 +132,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 
         @Override
         protected ApiResponse<Employee> doInBackground(Employee... employees) {
+            Log.v("RESPONSEWEIRD", "onPostExecute: nothing");
             if (employees.length > 0) {
                 return (new EmployeeService()).createEmployee(employees[0]);
             } else {
@@ -140,11 +143,21 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ApiResponse<Employee> apiResponse) {
+            Log.v("RESPONSEWEIRD", "onPostExecute: nothing");
             this.createEmployeeAlert.dismiss();
 
             if (!apiResponse.isValidResponse()) {
+                String message;
+                if(apiResponse.getMessage().equals(ApiResponseFieldName.NONUNIQUE_EMPLOYEE)){
+                    message = getResources().getString(R.string.alert_dialog_employee_create_username_nonunique);
+                }
+                else{
+                    message = getResources().getString(R.string.alert_dialog_employee_create_failed);
+                }
+
+
                 new AlertDialog.Builder(CreateEmployeeActivity.this)
-                    .setMessage(R.string.alert_dialog_employee_create_failed)
+                    .setMessage(message)
                     .create()
                     .show();
                 return;

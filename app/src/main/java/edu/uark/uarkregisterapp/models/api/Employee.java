@@ -25,12 +25,12 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
         return this;
     }
 
-    private String employeeUsername;
-    public String getUsername() {
-        return this.employeeUsername;
+    private String employeeId;
+    public String getEmployeeId() {
+        return this.employeeId;
     }
-    public Employee setUsername(String employeeUsername) {
-        this.employeeUsername = employeeUsername;
+    public Employee setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
         return this;
     }
 
@@ -104,7 +104,7 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
             this.id = UUID.fromString(value);
         }
 
-        this.employeeUsername = rawJsonObject.optString(EmployeeFieldName.EMPLOYEE_USERNAME.getFieldName());
+        this.employeeId = rawJsonObject.optString(EmployeeFieldName.EMPLOYEE_ID.getFieldName());
         this.firstName = rawJsonObject.optString(EmployeeFieldName.FIRST_NAME.getFieldName());
         this.lastName = rawJsonObject.optString(EmployeeFieldName.FIRST_NAME.getFieldName());
         this.active = rawJsonObject.optBoolean(EmployeeFieldName.ACTIVE.getFieldName());
@@ -135,7 +135,7 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
 
         try {
             jsonObject.put(EmployeeFieldName.ID.getFieldName(), this.id.toString());
-            jsonObject.put(EmployeeFieldName.EMPLOYEE_USERNAME.getFieldName(), this.employeeUsername);
+            jsonObject.put(EmployeeFieldName.EMPLOYEE_ID.getFieldName(), this.employeeId);
             jsonObject.put(EmployeeFieldName.FIRST_NAME.getFieldName(), this.firstName);
             jsonObject.put(EmployeeFieldName.LAST_NAME.getFieldName(), this.lastName);
             jsonObject.put(EmployeeFieldName.PASSWORD.getFieldName(), this.password);
@@ -158,7 +158,7 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
         this.lastName = StringUtils.EMPTY;
         this.password = StringUtils.EMPTY;
         this.firstName = StringUtils.EMPTY;
-        this.employeeUsername = StringUtils.EMPTY;
+        this.employeeId = StringUtils.EMPTY;
         this.classification = EmployeeClassification.NOT_DEFINED;
     }
 }

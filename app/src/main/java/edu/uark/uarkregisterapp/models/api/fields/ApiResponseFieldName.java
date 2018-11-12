@@ -2,16 +2,16 @@ package edu.uark.uarkregisterapp.models.api.fields;
 
 import edu.uark.uarkregisterapp.models.api.interfaces.FieldNameInterface;
 
-public enum EmployeeLoginFieldName implements FieldNameInterface {
-    EMPLOYEE_ID("employeeId"),
-    PASSWORD("password");
+public enum ApiResponseFieldName implements FieldNameInterface {
+
+    NONUNIQUE_EMPLOYEE("employee id nonunique");
 
     private String fieldName;
     public String getFieldName() {
         return this.fieldName;
     }
 
-    EmployeeLoginFieldName(String fieldName) {
+    ApiResponseFieldName(String fieldName) {
         this.fieldName = fieldName;
     }
 }
