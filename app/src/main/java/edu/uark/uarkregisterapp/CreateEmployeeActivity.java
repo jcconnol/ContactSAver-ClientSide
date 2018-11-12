@@ -124,6 +124,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
     private class CreateEmployeeTask extends AsyncTask<Employee, Void, ApiResponse<Employee>> {
         @Override
         protected void onPreExecute() {
+            uniqueUsername = true;
             this.createEmployeeAlert = new AlertDialog.Builder(CreateEmployeeActivity.this)
                 .setMessage(R.string.alert_dialog_employee_create)
                 .create();
@@ -132,8 +133,8 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 
         @Override
         protected ApiResponse<Employee> doInBackground(Employee... employees) {
-            Log.v("RESPONSEWEIRD", "onPostExecute: nothing");
             if (employees.length > 0) {
+                uniqueUsername = false;
                 return (new EmployeeService()).createEmployee(employees[0]);
             } else {
                 return (new ApiResponse<Employee>())
@@ -143,12 +144,12 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ApiResponse<Employee> apiResponse) {
-            Log.v("RESPONSEWEIRD", "onPostExecute: nothing");
+
             this.createEmployeeAlert.dismiss();
 
             if (!apiResponse.isValidResponse()) {
                 String message;
-                if(apiResponse.getMessage().equals(ApiResponseFieldName.NONUNIQUE_EMPLOYEE)){
+                if(!uniqueUsername){
                     message = getResources().getString(R.string.alert_dialog_employee_create_username_nonunique);
                 }
                 else{
@@ -173,6 +174,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        private boolean uniqueUsername;
         private AlertDialog createEmployeeAlert;
     }
 }

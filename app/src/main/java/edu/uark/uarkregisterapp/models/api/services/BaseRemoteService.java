@@ -159,7 +159,6 @@ abstract class BaseRemoteService {
 			bufferedReader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-
 			apiResponse
 				.setValidResponse(false)
 				.setMessage(e.getMessage());

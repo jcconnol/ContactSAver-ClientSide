@@ -1,5 +1,7 @@
 package edu.uark.uarkregisterapp.models.api.services;
 
+import android.util.Log;
+
 import org.json.JSONObject;
 
 import java.util.UUID;
