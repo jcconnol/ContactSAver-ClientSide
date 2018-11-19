@@ -21,8 +21,8 @@
         android:layout_height="wrap_content"/>
 
     <EditText
-        android:id="@+id/edit_text_product_lookup_code"
-        android:hint="@string/text_view_products_lookup_code"
+        android:id="@+id/edit_text_contact_name"
+        android:hint="@string/text_view_contacts_name"
         android:inputType="text"
         android:layout_below="@+id/text_view_product_lookup_code"
         android:layout_width="match_parent"
@@ -32,34 +32,16 @@
     <TextView
         android:id="@+id/text_view_product_count"
         android:text="@string/text_view_label_products_count"
-        android:layout_below="@+id/edit_text_product_lookup_code"
+        android:layout_below="@+id/edit_text_contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"/>
 
     <EditText
-        android:id="@+id/edit_text_product_count"
-        android:hint="@string/text_view_products_count"
+        android:id="@+id/edit_text_contact_number"
+        android:hint="@string/text_view_contacts_number"
         android:inputType="number"
         android:layout_below="@+id/text_view_product_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"/>
-
-    <TextView
-        android:id="@+id/text_view_product_created_on"
-        android:text="@string/text_view_label_products_created_on"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/edit_text_product_count"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
-
-    <EditText
-        android:id="@+id/edit_text_product_created_on"
-        android:hint="@string/text_view_products_created_on"
-        android:inputType="date"
-        android:enabled="false"
-        android:layout_below="@+id/text_view_product_created_on"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"/>

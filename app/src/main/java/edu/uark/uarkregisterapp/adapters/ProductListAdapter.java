@@ -26,12 +26,12 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
 		Product product = this.getItem(position);
 		if (product != null) {
-			TextView lookupCodeTextView = (TextView) view.findViewById(R.id.list_view_item_product_lookup_code);
+			TextView lookupCodeTextView = (TextView) view.findViewById(R.id.list_view_item_contact_name);
 			if (lookupCodeTextView != null) {
 				lookupCodeTextView.setText(product.getLookupCode());
 			}
 
-			TextView countTextView = (TextView) view.findViewById(R.id.list_view_item_product_count);
+			TextView countTextView = (TextView) view.findViewById(R.id.list_view_item_contact_number);
 			if (countTextView != null) {
 				countTextView.setText(String.format(Locale.getDefault(), "%d", product.getCount()));
 			}

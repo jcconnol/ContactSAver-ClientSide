@@ -29,24 +29,16 @@ public class MainActivity extends AppCompatActivity {
         this.getEmployeeWelcomeTextView().setText(welcomeText);
     }
 
-    public void beginTransactionButtonOnClick(View view) {
-        this.displayFunctionalityNotAvailableDialog();
+    public void goToProductViewButtonOnClick(View view) {
+        this.startActivity(new Intent(getApplicationContext(), LandingActivity.class));;
     }
 
-    public void productSalesReportButtonOnClick(View view) {
-        this.displayFunctionalityNotAvailableDialog();
-    }
-
-    public void cashierSalesReportButtonOnClick(View view) {
-        this.displayFunctionalityNotAvailableDialog();
-    }
-
-    public void createEmployeeButtonOnClick(View view) {
-        this.displayFunctionalityNotAvailableDialog();
+    public void goToProductsListingButtonOnClick(View view) {
+        this.startActivity(new Intent(getApplicationContext(), ProductsListingActivity.class));;
     }
 
     public void logOutButtonOnClick(View view) {
-        this.startActivity(new Intent(getApplicationContext(), LandingActivity.class));
+        this.startActivity(new Intent(getApplicationContext(), ProductViewActivity.class));
     }
 
     private TextView getEmployeeWelcomeTextView() {

@@ -35,7 +35,9 @@ public class ProductViewActivity extends AppCompatActivity {
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 
-		this.productTransition = this.getIntent().getParcelableExtra(this.getString(R.string.intent_extra_product));
+		//TODO get all contacts from phone
+
+		//this.productTransition = this.getIntent().getParcelableExtra(this.getString(R.string.intent_extra_product));
 	}
 
 	@Override
@@ -53,7 +55,7 @@ public class ProductViewActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-
+        //TODO when contact clicked to save to heroku
 		if (!this.productTransition.getId().equals(new UUID(0, 0))) {
 			this.getDeleteImageButton().setVisibility(View.VISIBLE);
 		} else {
@@ -61,9 +63,6 @@ public class ProductViewActivity extends AppCompatActivity {
 		}
 		this.getProductLookupCodeEditText().setText(this.productTransition.getLookupCode());
 		this.getProductCountEditText().setText(String.format(Locale.getDefault(), "%d", this.productTransition.getCount()));
-		this.getProductCreatedOnEditText().setText(
-			(new SimpleDateFormat("MM/dd/yyyy", Locale.US)).format(this.productTransition.getCreatedOn())
-		);
 	}
 
 	public void saveButtonOnClick(View view) {
@@ -98,15 +97,11 @@ public class ProductViewActivity extends AppCompatActivity {
 	}
 
 	private EditText getProductLookupCodeEditText() {
-		return (EditText) this.findViewById(R.id.edit_text_product_lookup_code);
+		return (EditText) this.findViewById(R.id.edit_text_contact_name);
 	}
 
 	private EditText getProductCountEditText() {
-		return (EditText) this.findViewById(R.id.edit_text_product_count);
-	}
-
-	private EditText getProductCreatedOnEditText() {
-		return (EditText) this.findViewById(R.id.edit_text_product_created_on);
+		return (EditText) this.findViewById(R.id.edit_text_contact_number);
 	}
 
 	private ImageButton getDeleteImageButton() {
@@ -154,7 +149,7 @@ public class ProductViewActivity extends AppCompatActivity {
 
 		return inputIsValid;
 	}
-
+//TODO remove async tasks and replace with savecontact task
 	private class SaveProductTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
 		protected void onPreExecute() {

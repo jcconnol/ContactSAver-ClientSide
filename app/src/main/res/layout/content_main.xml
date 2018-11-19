@@ -14,30 +14,40 @@
     tools:context="edu.uark.uarkregisterapp.MainActivity"
     tools:showIn="@layout/activity_main">
 
-<TextView
-    android:id="@+id/text_view_employee_welcome"
-    android:textSize="25sp"
-    android:layout_centerHorizontal="true"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/text_view_employee_welcome"
+        android:textSize="25sp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-<Button
-    android:id="@+id/button_begin_transaction"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/text_view_employee_welcome"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="30dp"
-    android:text="@string/button_begin_transaction"
-    android:onClick="beginTransactionButtonOnClick"/>
+    <Button
+        android:id="@+id/button_get_contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_employee_welcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/button_main_get_contacts"
+        android:onClick="goToProductViewButtonOnClick"/>
+
+    <Button
+        android:id="@+id/button_send_contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/button_get_contacts"
+        android:layout_marginTop="50dp"
+        android:text="@string/button_main_send_contacts"
+        android:onClick="goToProductsListingButtonOnClick"/>
 
     <Button
     android:id="@+id/button_log_out"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/button_begin_transaction"
+    android:layout_below="@+id/button_send_contacts"
     android:layout_centerHorizontal="true"
-    android:layout_marginTop="50dp"
+    android:layout_marginTop="90dp"
     android:text="@string/button_log_out"
     android:onClick="logOutButtonOnClick"/>
 
