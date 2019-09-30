@@ -3,7 +3,7 @@ package edu.uark.uarkregisterapp.models.api.fields;
 import edu.uark.uarkregisterapp.models.api.interfaces.FieldNameInterface;
 
 public enum UserLoginFieldName implements FieldNameInterface {
-    EMPLOYEE_ID("employeeId"),
+    USER_ID("userId"),
     PASSWORD("password");
 
     private String fieldName;

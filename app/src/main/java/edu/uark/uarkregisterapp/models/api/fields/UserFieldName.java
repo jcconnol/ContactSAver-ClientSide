@@ -8,9 +8,6 @@ public enum UserFieldName implements FieldNameInterface {
     FIRST_NAME("firstName"),
     LAST_NAME("lastName"),
     PASSWORD("password"),
-    ACTIVE("active"),
-    CLASSIFICATION("classification"),
-    MANAGER_ID("managerId"),
     CREATED_ON("createdOn");
 
     private String fieldName;
