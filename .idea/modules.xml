@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ContactSaver-ClientSide.iml" filepath="$PROJECT_DIR$/ContactSaver-ClientSide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/ContactSaver-ClientSide-app.iml" filepath="$PROJECT_DIR$/app/ContactSaver-ClientSide-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-<<<<<<< HEAD
         this.getEmployeeWelcomeTextView().setText("Welcome " + this.userTransition.getFirstName() + " (" + this.userTransition.getEmployeeId() + ")!");
     }
 
@@ -31,22 +30,6 @@ public class MainActivity extends AppCompatActivity {
         //TODO make alert that you are about to logout
 
         this.startActivity(new Intent(getApplicationContext(), LandingActivity.class));
-=======
-        String welcomeText = "Welcome " + this.employeeTransition.getFirstName() + " (" + this.employeeTransition.getEmployeeId() + ")!";
-        this.getEmployeeWelcomeTextView().setText(welcomeText);
-    }
-
-    public void goToProductViewButtonOnClick(View view) {
-        this.startActivity(new Intent(getApplicationContext(), LandingActivity.class));;
-    }
-
-    public void goToProductsListingButtonOnClick(View view) {
-        this.startActivity(new Intent(getApplicationContext(), ProductsListingActivity.class));;
-    }
-
-    public void logOutButtonOnClick(View view) {
-        this.startActivity(new Intent(getApplicationContext(), ProductViewActivity.class));
->>>>>>> b46c1c2bc4732966eb4cbca71033467510027401
     }
 
     private TextView getEmployeeWelcomeTextView() {

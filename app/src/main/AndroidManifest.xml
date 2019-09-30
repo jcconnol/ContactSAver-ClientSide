@@ -17,14 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-<<<<<<< HEAD
-            android:name=".ContactsListingActivity"
+        <activity android:name=".ContactsListingActivity">
             android:label="@string/title_activity_contact_listing"
-=======
-            android:name=".ProductsListingActivity"
-            android:label="@string/title_activity_products_listing"
->>>>>>> b46c1c2bc4732966eb4cbca71033467510027401
+
             android:parentActivityName=".LandingActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -32,16 +27,9 @@
                 android:value="edu.uark.uarkregisterapp.LandingActivity" />
         </activity>
         <activity
-<<<<<<< HEAD
-=======
-            android:name=".ProductViewActivity"
-            android:label="@string/title_activity_product_view"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
->>>>>>> b46c1c2bc4732966eb4cbca71033467510027401
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".CreateUserActivity"
             android:label="@string/title_activity_create_employee"

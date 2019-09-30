@@ -16,19 +16,11 @@ import edu.uark.uarkregisterapp.models.api.enums.ApiObject;
 import edu.uark.uarkregisterapp.models.api.enums.ProductApiMethod;
 import edu.uark.uarkregisterapp.models.api.interfaces.PathElementInterface;
 
-<<<<<<< HEAD:app/src/main/java/edu/uark/uarkregisterapp/models/api/services/ContactService.java
 public class ContactService extends BaseRemoteService {
 	public ApiResponse<Contact> getContact(UUID id) {
 		return this.readContactDetailsFromResponse(
 			this.<Contact>performGetRequest(
 				this.buildPath(id)
-=======
-public class ProductService extends BaseRemoteService {
-	public ApiResponse<Product> getProduct(UUID productId) {
-		return this.readProductDetailsFromResponse(
-			this.<Product>performGetRequest(
-				this.buildPath(productId)
->>>>>>> b46c1c2bc4732966eb4cbca71033467510027401:app/src/main/java/edu/uark/uarkregisterapp/models/api/services/ProductService.java
 			)
 		);
 	}
@@ -37,13 +29,8 @@ public class ProductService extends BaseRemoteService {
 		return this.readContactDetailsFromResponse(
 			this.<Contact>performGetRequest(
 				this.buildPath(
-<<<<<<< HEAD:app/src/main/java/edu/uark/uarkregisterapp/models/api/services/ContactService.java
 					(new PathElementInterface[] { ContactApiMethod.BY_CONTACT_NAME })
 					, contactContactId
-=======
-					(new PathElementInterface[] { ProductApiMethod.BY_LOOKUP_CODE })
-					, productLookupCode
->>>>>>> b46c1c2bc4732966eb4cbca71033467510027401:app/src/main/java/edu/uark/uarkregisterapp/models/api/services/ProductService.java
 				)
 			)
 		);
@@ -111,9 +98,5 @@ public class ProductService extends BaseRemoteService {
 		return apiResponse;
 	}
 
-<<<<<<< HEAD:app/src/main/java/edu/uark/uarkregisterapp/models/api/services/ContactService.java
 	public ContactService() { super(ApiObject.CONTACT); }
-=======
-	public ProductService() { super(ApiObject.PRODUCT); }
->>>>>>> b46c1c2bc4732966eb4cbca71033467510027401:app/src/main/java/edu/uark/uarkregisterapp/models/api/services/ProductService.java
 }

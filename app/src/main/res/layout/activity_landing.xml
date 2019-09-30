@@ -58,7 +58,6 @@
         android:onClick="signInButtonOnClick"/>
 
     <Button
-<<<<<<< HEAD
         android:id="@+id/createAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,16 +75,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
         android:text="Forgot Password?" />
-=======
-        android:id="@+id/create_employee_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/button_sign_in"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-34dp"
-        android:layout_marginBottom="170dp"
-        android:text="@string/create_employee_button_text"
-        android:onClick="createEmployeeButtonOnClickFromLanding"/>
->>>>>>> b46c1c2bc4732966eb4cbca71033467510027401
 
 </RelativeLayout>
