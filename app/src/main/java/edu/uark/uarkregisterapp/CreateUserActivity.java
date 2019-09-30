@@ -7,24 +7,27 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
 import org.apache.commons.lang3.StringUtils;
 
-import edu.uark.uarkregisterapp.models.api.ApiResponse;
-import edu.uark.uarkregisterapp.models.api.Employee;
-import edu.uark.uarkregisterapp.models.api.enums.EmployeeClassification;
-import edu.uark.uarkregisterapp.models.api.services.EmployeeService;
-import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 
-public class CreateEmployeeActivity extends AppCompatActivity {
+import java.util.UUID;
+
+import edu.uark.uarkregisterapp.models.api.ApiResponse;
+import edu.uark.uarkregisterapp.models.api.User;
+import edu.uark.uarkregisterapp.models.api.services.UserService;
+import edu.uark.uarkregisterapp.models.transition.UserTransition;
+
+public class CreateUserActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_employee);
+        setContentView(R.layout.activity_create_user);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         ActionBar actionBar = this.getSupportActionBar();
@@ -49,14 +52,13 @@ public class CreateEmployeeActivity extends AppCompatActivity {
             return;
         }
 
-        (new CreateEmployeeTask()).execute(
-            (new Employee())
-                .setActive(true)
-                .setFirstName(this.getFirstNameEditText().getText().toString())
-                .setLastName(this.getLastNameEditText().getText().toString())
-                .setPassword(this.getPasswordEditText().getText().toString())
-                .setClassification(EmployeeClassification.GENERAL_MANAGER)
-        );
+        User making = new User();
+        making.setId(new UUID(0,0));
+        making.setFirstName(this.getFirstNameEditText().getText().toString());
+        making.setLastName(this.getLastNameEditText().getText().toString());
+        making.setPassword(this.getPasswordEditText().getText().toString());
+
+        (new CreateUserTask()).execute(making);
     }
 
     private EditText getFirstNameEditText() {
@@ -104,47 +106,52 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 
     private void displayValidationAlert(int stringId) {
         new AlertDialog.Builder(this)
-            .setMessage(stringId)
-            .create()
-            .show();
+                .setMessage(stringId)
+                .create()
+                .show();
     }
 
-    private class CreateEmployeeTask extends AsyncTask<Employee, Void, ApiResponse<Employee>> {
+    private class CreateUserTask extends AsyncTask<User, Void, ApiResponse<User>> {
         @Override
         protected void onPreExecute() {
-            this.createEmployeeAlert = new AlertDialog.Builder(CreateEmployeeActivity.this)
-                .setMessage(R.string.alert_dialog_employee_create)
-                .create();
+            this.createEmployeeAlert = new AlertDialog.Builder(CreateUserActivity.this)
+                    .setMessage(R.string.alert_dialog_employee_create)
+                    .create();
             this.createEmployeeAlert.show();
         }
 
         @Override
-        protected ApiResponse<Employee> doInBackground(Employee... employees) {
-            if (employees.length > 0) {
-                return (new EmployeeService()).createEmployee(employees[0]);
+        protected ApiResponse<User> doInBackground(User... users) {
+            if (users.length > 0) {
+                Log.d("USERDATA", "doInBackground: "+users[0].getId());
+                Log.d("USERDATA", "doInBackground: "+users[0].getUserName());
+                Log.d("USERDATA", "doInBackground: "+users[0].getLastName());
+                Log.d("USERDATA", "doInBackground: "+users[0].getFirstName());
+
+                return (new UserService()).createUser(users[0]);
             } else {
-                return (new ApiResponse<Employee>())
-                    .setValidResponse(false);
+                return (new ApiResponse<User>())
+                        .setValidResponse(false);
             }
         }
 
         @Override
-        protected void onPostExecute(ApiResponse<Employee> apiResponse) {
+        protected void onPostExecute(ApiResponse<User> apiResponse) {
             this.createEmployeeAlert.dismiss();
-
+            Log.d("USERPOST", "onPostExecute: GOT HERE");
             if (!apiResponse.isValidResponse()) {
-                new AlertDialog.Builder(CreateEmployeeActivity.this)
-                    .setMessage(R.string.alert_dialog_employee_create_failed)
-                    .create()
-                    .show();
+                new AlertDialog.Builder(CreateUserActivity.this)
+                        .setMessage(R.string.alert_dialog_employee_create_failed)
+                        .create()
+                        .show();
                 return;
             }
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
             intent.putExtra(
-                getString(R.string.intent_extra_employee)
-                , new EmployeeTransition(apiResponse.getData())
+                    getString(R.string.intent_extra_employee)
+                    , new UserTransition(apiResponse.getData())
             );
 
             startActivity(intent);

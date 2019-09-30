@@ -4,11 +4,11 @@ import edu.uark.uarkregisterapp.models.api.interfaces.FieldNameInterface;
 
 public enum ContactFieldName implements FieldNameInterface {
 	ID("id"),
-	LOOKUP_CODE("lookupCode"),
-	COUNT("count"),
+	CONTACT_ID("contactId"),
+	MIMETYPE("mimetype"),
+	DATA("data"),
 	API_REQUEST_STATUS("apiRequestStatus"),
-	API_REQUEST_MESSAGE("apiRequestMessage"),
-	CREATED_ON("createdOn");
+	API_REQUEST_MESSAGE("apiRequestMessage");
 
 	private String fieldName;
 	public String getFieldName() {

@@ -1,14 +1,17 @@
 package edu.uark.uarkregisterapp.models.api;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.Vector;
 
 import edu.uark.uarkregisterapp.models.api.fields.ContactFieldName;
 import edu.uark.uarkregisterapp.models.api.interfaces.ConvertToJsonInterface;
@@ -17,38 +20,42 @@ import edu.uark.uarkregisterapp.models.transition.ContactTransition;
 
 public class Contact implements ConvertToJsonInterface, LoadFromJsonInterface<Contact> {
 	private UUID id;
+	private Integer contactID;
+	private String mimetype;
+	private String [] data;
+	private Integer dataSize = 15;
+
 	public UUID getId() {
 		return this.id;
 	}
+	public Integer getContactId() {
+		return this.contactID;
+	}
+	public String getMimeType() { return this.mimetype; }
+	public String[] getData() { return this.data; }
+
 	public Contact setId(UUID id) {
 		this.id = id;
 		return this;
 	}
 
-	private String lookupCode;
-	public String getLookupCode() {
-		return this.lookupCode;
-	}
-	public Contact setLookupCode(String lookupCode) {
-		this.lookupCode = lookupCode;
+	public Contact setId(Integer contactID) {
+		this.contactID = contactID;
 		return this;
 	}
 
-	private int count;
-	public int getCount() {
-		return this.count;
-	}
-	public Contact setCount(int count) {
-		this.count = count;
+	public Contact setMimeType(String mimetype) {
+		this.mimetype = mimetype;
 		return this;
 	}
 
-	private Date createdOn;
-	public Date getCreatedOn() {
-		return this.createdOn;
-	}
-	public Contact setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
+	public Contact setData(String[] data) {
+		this.data = new String[dataSize];
+		for(int i = 0; i < 15; i++) {
+			if(!this.data[i].equals(data[i])) {
+				this.data[i] = data[i];
+			}
+		}
 		return this;
 	}
 
@@ -59,15 +66,18 @@ public class Contact implements ConvertToJsonInterface, LoadFromJsonInterface<Co
 			this.id = UUID.fromString(value);
 		}
 
-		this.lookupCode = rawJsonObject.optString(ContactFieldName.LOOKUP_CODE.getFieldName());
-		this.count = rawJsonObject.optInt(ContactFieldName.COUNT.getFieldName());
+		this.contactID = rawJsonObject.optInt(ContactFieldName.CONTACT_ID.getFieldName());
+		this.mimetype = rawJsonObject.optString(ContactFieldName.MIMETYPE.getFieldName());
 
-		value = rawJsonObject.optString(ContactFieldName.CREATED_ON.getFieldName());
+		JSONArray ja = rawJsonObject.optJSONArray(ContactFieldName.DATA.getFieldName());
 		if (!StringUtils.isBlank(value)) {
-			try {
-				this.createdOn = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US).parse(value);
-			} catch (ParseException e) {
-				e.printStackTrace();
+			for(int i = 0; i < ja.length(); i++){
+				try {
+					JSONObject row = ja.getJSONObject(i);
+					data[i] = row.getString(ContactFieldName.DATA.getFieldName());
+				} catch (JSONException e){
+					e.printStackTrace();
+				}
 			}
 		}
 
@@ -80,9 +90,13 @@ public class Contact implements ConvertToJsonInterface, LoadFromJsonInterface<Co
 
 		try {
 			jsonObject.put(ContactFieldName.ID.getFieldName(), this.id.toString());
-			jsonObject.put(ContactFieldName.LOOKUP_CODE.getFieldName(), this.lookupCode);
-			jsonObject.put(ContactFieldName.COUNT.getFieldName(), this.count);
-			jsonObject.put(ContactFieldName.CREATED_ON.getFieldName(), (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)).format(this.createdOn));
+			jsonObject.put(ContactFieldName.CONTACT_ID.getFieldName(), this.contactID);
+			jsonObject.put(ContactFieldName.MIMETYPE.getFieldName(), this.mimetype);
+			JSONArray jsonArray = new JSONArray();
+			for(int i = 0; i < dataSize; i++) {
+				jsonArray.put(data[i]);
+			}
+			jsonObject.put(ContactFieldName.DATA.getFieldName(), jsonArray);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -91,16 +105,16 @@ public class Contact implements ConvertToJsonInterface, LoadFromJsonInterface<Co
 	}
 
 	public Contact() {
-		this.count = -1;
-		this.lookupCode = "";
 		this.id = new UUID(0, 0);
-		this.createdOn = new Date();
+		this.contactID = -1;
+		this.mimetype = "text";
+		this.data = new String[dataSize];
 	}
 
 	public Contact(ContactTransition contactTransition) {
 		this.id = contactTransition.getId();
-		this.count = contactTransition.getCount();
-		this.createdOn = contactTransition.getCreatedOn();
-		this.lookupCode = contactTransition.getLookupCode();
+		this.contactID = contactTransition.getContactId();
+		this.mimetype = contactTransition.getMimeType();
+		this.data = contactTransition.getData();
 	}
 }

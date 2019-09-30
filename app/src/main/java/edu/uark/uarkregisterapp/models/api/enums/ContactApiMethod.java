@@ -4,7 +4,7 @@ import edu.uark.uarkregisterapp.models.api.interfaces.PathElementInterface;
 
 public enum ContactApiMethod implements PathElementInterface {
 	NONE(""),
-	BY_LOOKUP_CODE("byLookupCode");
+	BY_CONTACT_NAME("byContactId");
 
 	@Override
 	public String getPathValue() {

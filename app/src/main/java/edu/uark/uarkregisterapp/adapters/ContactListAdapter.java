@@ -9,38 +9,36 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Locale;
-
 import edu.uark.uarkregisterapp.R;
-import edu.uark.uarkregisterapp.models.api.Product;
+import edu.uark.uarkregisterapp.models.api.Contact;
 
-public class ContactListAdapter extends ArrayAdapter<Product> {
+public class ContactListAdapter extends ArrayAdapter<Contact> {
 	@NonNull
 	@Override
 	public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 		View view = convertView;
 		if (view == null) {
 			LayoutInflater inflater = LayoutInflater.from(this.getContext());
-			view = inflater.inflate(R.layout.list_view_item_product, parent, false);
+			view = inflater.inflate(R.layout.list_view_item_contact, parent, false);
 		}
 
-		Product product = this.getItem(position);
-		if (product != null) {
-			TextView lookupCodeTextView = (TextView) view.findViewById(R.id.list_view_item_product_lookup_code);
-			if (lookupCodeTextView != null) {
-				lookupCodeTextView.setText(product.getLookupCode());
+		Contact contact = this.getItem(position);
+		if (contact != null) {
+			TextView contactIdTextView = (TextView) view.findViewById(R.id.list_view_item_contact_contact_id);
+			if (contactIdTextView != null) {
+				contactIdTextView.setText(contact.getContactId());
 			}
 
-			TextView countTextView = (TextView) view.findViewById(R.id.list_view_item_product_count);
+			TextView countTextView = (TextView) view.findViewById(R.id.list_view_item_contact_data1);
 			if (countTextView != null) {
-				countTextView.setText(String.format(Locale.getDefault(), "%d", product.getCount()));
+				countTextView.setText(contact.getData()[0]);
 			}
 		}
 
 		return view;
 	}
 
-	public ContactListAdapter(Context context, List<Product> products) {
-		super(context, R.layout.list_view_item_product, products);
+	public ContactListAdapter(Context context, List<Contact> contacts) {
+		super(context, R.layout.list_view_item_contact, contacts);
 	}
 }

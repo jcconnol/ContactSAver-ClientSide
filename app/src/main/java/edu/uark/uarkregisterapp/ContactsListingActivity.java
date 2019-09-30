@@ -17,7 +17,7 @@ import java.util.List;
 
 import edu.uark.uarkregisterapp.adapters.ContactListAdapter;
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
-import edu.uark.uarkregisterapp.models.api.Product;
+import edu.uark.uarkregisterapp.models.api.Contact;
 import edu.uark.uarkregisterapp.models.api.services.ContactService;
 import edu.uark.uarkregisterapp.models.transition.ContactTransition;
 
@@ -25,7 +25,7 @@ public class ContactsListingActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_products_listing);
+		setContentView(R.layout.activity_contacts_listing);
 		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
 		ActionBar actionBar = this.getSupportActionBar();
@@ -33,21 +33,16 @@ public class ContactsListingActivity extends AppCompatActivity {
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 
-		this.products = new ArrayList<>();
-		this.productListAdapter = new ContactListAdapter(this, this.products);
+		this.contacts = new ArrayList<>();
+		this.contactListAdapter = new ContactListAdapter(this, this.contacts);
 
-		this.getProductsListView().setAdapter(this.productListAdapter);
-		this.getProductsListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		this.getContactsListView().setAdapter(this.contactListAdapter);
+
+		this.getContactsListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
+				//TODO makes each contact in list clickable, when clicked checks box to add to Heroku
 
-				intent.putExtra(
-					getString(R.string.intent_extra_product),
-					new ContactTransition((Product) getProductsListView().getItemAtPosition(position))
-				);
-
-				startActivity(intent);
 			}
 		});
 	}
@@ -56,42 +51,42 @@ public class ContactsListingActivity extends AppCompatActivity {
 	protected void onResume() {
 		super.onResume();
 
-		(new RetrieveProductsTask()).execute();
+		(new RetrieveContactsTask()).execute();
 	}
 
-	private ListView getProductsListView() {
-		return (ListView) this.findViewById(R.id.list_view_products);
+	private ListView getContactsListView() {
+		return (ListView) this.findViewById(R.id.list_view_contacts);
 	}
 
-	private class RetrieveProductsTask extends AsyncTask<Void, Void, ApiResponse<List<Product>>> {
+	private class RetrieveContactsTask extends AsyncTask<Void, Void, ApiResponse<List<Contact>>> {
 		@Override
 		protected void onPreExecute() {
-			this.loadingProductsAlert.show();
+			this.loadingContactsAlert.show();
 		}
 
 		@Override
-		protected ApiResponse<List<Product>> doInBackground(Void... params) {
-			ApiResponse<List<Product>> apiResponse = (new ContactService()).getProducts();
+		protected ApiResponse<List<Contact>> doInBackground(Void... params) {
+			ApiResponse<List<Contact>> apiResponse = (new ContactService()).getContacts();
 
 			if (apiResponse.isValidResponse()) {
-				products.clear();
-				products.addAll(apiResponse.getData());
+				contacts.clear();
+				contacts.addAll(apiResponse.getData());
 			}
 
 			return apiResponse;
 		}
 
 		@Override
-		protected void onPostExecute(ApiResponse<List<Product>> apiResponse) {
+		protected void onPostExecute(ApiResponse<List<Contact>> apiResponse) {
 			if (apiResponse.isValidResponse()) {
-				productListAdapter.notifyDataSetChanged();
+				contactListAdapter.notifyDataSetChanged();
 			}
 
-			this.loadingProductsAlert.dismiss();
+			this.loadingContactsAlert.dismiss();
 
 			if (!apiResponse.isValidResponse()) {
 				new AlertDialog.Builder(ContactsListingActivity.this).
-					setMessage(R.string.alert_dialog_products_load_failure).
+					setMessage(R.string.alert_dialog_contacts_load_failure).
 					setPositiveButton(
 						R.string.button_dismiss,
 						new DialogInterface.OnClickListener() {
@@ -105,15 +100,15 @@ public class ContactsListingActivity extends AppCompatActivity {
 			}
 		}
 
-		private AlertDialog loadingProductsAlert;
+		private AlertDialog loadingContactsAlert;
 
-		private RetrieveProductsTask() {
-			this.loadingProductsAlert = new AlertDialog.Builder(ContactsListingActivity.this).
-				setMessage(R.string.alert_dialog_products_loading).
+		private RetrieveContactsTask() {
+			this.loadingContactsAlert = new AlertDialog.Builder(ContactsListingActivity.this).
+				setMessage(R.string.alert_dialog_contacts_loading).
 				create();
 		}
 	}
 
-	private List<Product> products;
-	private ContactListAdapter productListAdapter;
+	private List<Contact> contacts;
+	private ContactListAdapter contactListAdapter;
 }

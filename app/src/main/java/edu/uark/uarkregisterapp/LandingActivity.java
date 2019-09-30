@@ -11,12 +11,11 @@ import android.widget.EditText;
 
 import org.apache.commons.lang3.StringUtils;
 
-import edu.uark.uarkregisterapp.models.api.ActiveEmployeeCounts;
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
-import edu.uark.uarkregisterapp.models.api.Employee;
-import edu.uark.uarkregisterapp.models.api.EmployeeLogin;
-import edu.uark.uarkregisterapp.models.api.services.EmployeeService;
-import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
+import edu.uark.uarkregisterapp.models.api.User;
+import edu.uark.uarkregisterapp.models.api.UserLogin;
+import edu.uark.uarkregisterapp.models.api.services.UserService;
+import edu.uark.uarkregisterapp.models.transition.UserTransition;
 
 public class LandingActivity extends AppCompatActivity {
 
@@ -26,11 +25,13 @@ public class LandingActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_landing);
 	}
 
+	public void createUserButtonOnClick(View view) {
+		startActivity(new Intent(LandingActivity.this, CreateUserActivity.class));
+	}
+
 	@Override
 	protected void onStart() {
 		super.onStart();
-
-		(new QueryActiveEmployeeCountsTask()).execute();
 	}
 
 	public void signInButtonOnClick(View view) {
@@ -55,7 +56,7 @@ public class LandingActivity extends AppCompatActivity {
 		}
 
 		(new SignInTask()).execute(
-			(new EmployeeLogin())
+			(new UserLogin())
 				.setEmployeeId(this.getEmployeeIdEditText().getText().toString())
 				.setPassword(this.getPasswordEditText().getText().toString())
 		);
@@ -69,43 +70,7 @@ public class LandingActivity extends AppCompatActivity {
 		return (EditText) this.findViewById(R.id.edit_text_password);
 	}
 
-	private class QueryActiveEmployeeCountsTask extends AsyncTask<Void, Void, ApiResponse<ActiveEmployeeCounts>> {
-		@Override
-		protected ApiResponse<ActiveEmployeeCounts> doInBackground(Void... params) {
-			return (new EmployeeService()).getActiveEmployeeCounts();
-		}
-
-		@Override
-		protected void onPostExecute(ApiResponse<ActiveEmployeeCounts> apiResponse) {
-			if (apiResponse.isValidResponse() && this.activeEmployeeExists(apiResponse.getData())) {
-				return;
-			}
-
-			new AlertDialog.Builder(LandingActivity.this)
-				.setMessage(R.string.alert_dialog_no_employees_exist)
-				.setPositiveButton(
-					R.string.button_ok,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-							startActivity(new Intent(getApplicationContext(), CreateEmployeeActivity.class));
-
-							dialog.dismiss();
-						}
-					}
-				)
-				.create()
-				.show();
-		}
-
-		private boolean activeEmployeeExists(ActiveEmployeeCounts activeEmployeeCounts) {
-			return (
-				(activeEmployeeCounts.getActiveCashierCount() > 0)
-				|| (activeEmployeeCounts.getActiveShiftManagerCount() > 0)
-				|| (activeEmployeeCounts.getActiveGeneralManagerCount() > 0));
-		}
-	}
-
-	private class SignInTask extends AsyncTask<EmployeeLogin, Void, ApiResponse<Employee>> {
+	private class SignInTask extends AsyncTask<UserLogin, Void, ApiResponse<User>> {
 		@Override
 		protected void onPreExecute() {
 			this.signInAlert = new AlertDialog.Builder(LandingActivity.this)
@@ -115,17 +80,17 @@ public class LandingActivity extends AppCompatActivity {
 		}
 
 		@Override
-		protected ApiResponse<Employee> doInBackground(EmployeeLogin... employeeLogins) {
-			if (employeeLogins.length > 0) {
-				return (new EmployeeService()).logIn(employeeLogins[0]);
+		protected ApiResponse<User> doInBackground(UserLogin... userLogins) {
+			if (userLogins.length > 0) {
+				return (new UserService()).logIn(userLogins[0]);
 			} else {
-				return (new ApiResponse<Employee>())
+				return (new ApiResponse<User>())
 					.setValidResponse(false);
 			}
 		}
 
 		@Override
-		protected void onPostExecute(ApiResponse<Employee> apiResponse) {
+		protected void onPostExecute(ApiResponse<User> apiResponse) {
 			this.signInAlert.dismiss();
 
 			if (!apiResponse.isValidResponse()) {
@@ -140,7 +105,7 @@ public class LandingActivity extends AppCompatActivity {
 
 			intent.putExtra(
 				getString(R.string.intent_extra_employee)
-				, new EmployeeTransition(apiResponse.getData())
+				, new UserTransition(apiResponse.getData())
 			);
 
 			startActivity(intent);
