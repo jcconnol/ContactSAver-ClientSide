@@ -21,6 +21,7 @@
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+<<<<<<< HEAD
 
     <ListView
         android:id="@+id/list_view_products"
@@ -37,3 +38,37 @@
         android:text="@string/button_log_out" />
 
 </LinearLayout>
+=======
+
+    <Button
+        android:id="@+id/button_get_contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_employee_welcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/button_main_get_contacts"
+        android:onClick="goToProductViewButtonOnClick"/>
+
+    <Button
+        android:id="@+id/button_send_contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/button_get_contacts"
+        android:layout_marginTop="50dp"
+        android:text="@string/button_main_send_contacts"
+        android:onClick="goToProductsListingButtonOnClick"/>
+
+    <Button
+    android:id="@+id/button_log_out"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/button_send_contacts"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="90dp"
+    android:text="@string/button_log_out"
+    android:onClick="logOutButtonOnClick"/>
+
+</RelativeLayout>
+>>>>>>> b46c1c2bc4732966eb4cbca71033467510027401

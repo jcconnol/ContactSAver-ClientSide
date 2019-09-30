@@ -159,7 +159,6 @@ abstract class BaseRemoteService {
 			bufferedReader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-
 			apiResponse
 				.setValidResponse(false)
 				.setMessage(e.getMessage());
@@ -271,4 +270,9 @@ abstract class BaseRemoteService {
 	private static final String JSON_PAYLOAD_TYPE = "application/json";
 	private static final String CONTENT_TYPE_REQUEST_PROPERTY = "Content-Type";
 	private static final String BASE_URL = "https://contact-saver-service.herokuapp.com/api/";
+<<<<<<< HEAD
+=======
+	//private static final String BASE_URL = "https://registerapi-java.herokuapp.com/api/";
+	//private static final String BASE_URL = "https://uarkregservnodejs-sprint2.herokuapp.com/api/";
+>>>>>>> b46c1c2bc4732966eb4cbca71033467510027401
 }

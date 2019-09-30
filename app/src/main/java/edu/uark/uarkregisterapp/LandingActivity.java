@@ -35,12 +35,12 @@ public class LandingActivity extends AppCompatActivity {
 	}
 
 	public void signInButtonOnClick(View view) {
-		if (StringUtils.isBlank(this.getEmployeeIdEditText().getText().toString())) {
+		if (StringUtils.isBlank(this.getEmployeeUsernameEditText().getText().toString())) {
 			new AlertDialog.Builder(this)
-				.setMessage(R.string.alert_dialog_employee_id_empty)
+				.setMessage(R.string.alert_dialog_employee_username_empty)
 				.create()
 				.show();
-			this.getEmployeeIdEditText().requestFocus();
+			this.getEmployeeUsernameEditText().requestFocus();
 
 			return;
 		}
@@ -56,14 +56,24 @@ public class LandingActivity extends AppCompatActivity {
 		}
 
 		(new SignInTask()).execute(
+<<<<<<< HEAD
 			(new UserLogin())
 				.setEmployeeId(this.getEmployeeIdEditText().getText().toString())
+=======
+			(new EmployeeLogin())
+				.setEmployeeId(this.getEmployeeUsernameEditText().getText().toString())
+>>>>>>> b46c1c2bc4732966eb4cbca71033467510027401
 				.setPassword(this.getPasswordEditText().getText().toString())
 		);
 	}
 
-	private EditText getEmployeeIdEditText() {
-		return (EditText) this.findViewById(R.id.edit_text_employee_id);
+	public void createEmployeeButtonOnClickFromLanding(View view){
+		Intent i = new Intent(LandingActivity.this, CreateEmployeeActivity.class);
+		startActivity(i);
+	}
+
+	private EditText getEmployeeUsernameEditText() {
+		return (EditText) this.findViewById(R.id.edit_text_employee_username);
 	}
 
 	private EditText getPasswordEditText() {

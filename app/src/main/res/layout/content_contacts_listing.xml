@@ -11,10 +11,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+<<<<<<< HEAD:app/src/main/res/layout/content_contacts_listing.xml
     tools:context="edu.uark.uarkregisterapp.ContactsListingActivity"
     tools:showIn="@layout/activity_contacts_listing">
 
 
+=======
+    tools:context="edu.uark.uarkregisterapp.ProductsListingActivity"
+    tools:showIn="@layout/activity_products_listing">
+>>>>>>> b46c1c2bc4732966eb4cbca71033467510027401:app/src/main/res/layout/content_products_listing.xml
 
     <ListView
         android:id="@+id/list_view_contacts"

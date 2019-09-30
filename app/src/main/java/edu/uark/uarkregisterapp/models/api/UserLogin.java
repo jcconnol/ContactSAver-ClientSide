@@ -9,7 +9,7 @@ import edu.uark.uarkregisterapp.models.api.interfaces.ConvertToJsonInterface;
 
 public class UserLogin implements ConvertToJsonInterface {
     private String employeeId;
-    public String getEmployeeId() {
+    public String getEmployeeUsername() {
         return this.employeeId;
     }
     public UserLogin setEmployeeId(String employeeId) {

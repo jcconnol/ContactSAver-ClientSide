@@ -30,8 +30,8 @@
         android:layout_marginTop="5dp"/>
 
     <EditText
-        android:id="@+id/edit_text_employee_id"
-        android:hint="@string/text_view_login_employee_id"
+        android:id="@+id/edit_text_employee_username"
+        android:hint="@string/text_view_login_employee_username"
         android:inputType="text"
         android:layout_below="@+id/text_view_please_sign_in"
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
         android:id="@+id/edit_text_password"
         android:hint="@string/text_view_login_password"
         android:inputType="textPassword"
-        android:layout_below="@+id/edit_text_employee_id"
+        android:layout_below="@+id/edit_text_employee_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"/>
@@ -58,6 +58,7 @@
         android:onClick="signInButtonOnClick"/>
 
     <Button
+<<<<<<< HEAD
         android:id="@+id/createAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,5 +76,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
         android:text="Forgot Password?" />
+=======
+        android:id="@+id/create_employee_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/button_sign_in"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="-34dp"
+        android:layout_marginBottom="170dp"
+        android:text="@string/create_employee_button_text"
+        android:onClick="createEmployeeButtonOnClickFromLanding"/>
+>>>>>>> b46c1c2bc4732966eb4cbca71033467510027401
 
 </RelativeLayout>
