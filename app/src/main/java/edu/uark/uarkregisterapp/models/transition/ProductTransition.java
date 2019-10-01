@@ -10,55 +10,51 @@ import java.util.UUID;
 
 import edu.uark.uarkregisterapp.commands.converters.ByteToUUIDConverterCommand;
 import edu.uark.uarkregisterapp.commands.converters.UUIDToByteConverterCommand;
-import edu.uark.uarkregisterapp.models.api.Contact;
+import edu.uark.uarkregisterapp.models.api.Product;
 
 public class ProductTransition implements Parcelable {
 	private UUID id;
-	private Integer contactID;
-	private String mimetype;
-	private String [] data;
-	private Integer dataSize = 15;
-
 	public UUID getId() {
 		return this.id;
 	}
-	public Integer getContactId() {
-		return this.contactID;
-	}
-	public String getMimeType() { return this.mimetype; }
-	public String [] getData() { return this.data; }
-
-	public ContactTransition setId(UUID id) {
+	public ProductTransition setId(UUID id) {
 		this.id = id;
 		return this;
 	}
 
-	public ContactTransition setId(Integer contactID) {
-		this.contactID = contactID;
+	private String lookupCode;
+	public String getLookupCode() {
+		return this.lookupCode;
+	}
+	public ProductTransition setLookupCode(String lookupCode) {
+		this.lookupCode = lookupCode;
 		return this;
 	}
 
-	public ContactTransition setMimeType(String mimetype) {
-		this.mimetype = mimetype;
+	private int count;
+	public int getCount() {
+		return this.count;
+	}
+	public ProductTransition setCount(int count) {
+		this.count = count;
 		return this;
 	}
 
-	public ContactTransition setData(String[] data) {
-		this.data = new String[dataSize];
-		for(int i = 0; i < 15; i++) {
-			if(!this.data[i].equals(data[i])) {
-				this.data[i] = data[i];
-			}
-		}
+	private Date createdOn;
+	public Date getCreatedOn() {
+		return this.createdOn;
+	}
+	public ProductTransition setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
 		return this;
 	}
 
 	@Override
 	public void writeToParcel(Parcel destination, int flags) {
 		destination.writeByteArray((new UUIDToByteConverterCommand()).setValueToConvert(this.id).execute());
-		destination.writeInt(this.contactID);
-		destination.writeString(this.mimetype);
-		destination.writeStringArray(this.data);
+		destination.writeString(this.lookupCode);
+		destination.writeInt(this.count);
+		destination.writeLong(this.createdOn.getTime());
 	}
 
 	@Override
@@ -66,10 +62,9 @@ public class ProductTransition implements Parcelable {
 		return 0;
 	}
 
-	public static final Parcelable.Creator<ContactTransition> CREATOR = new Parcelable.Creator<ContactTransition>() {
-		public ContactTransition createFromParcel(Parcel contactTransitionParcel) {
-			return new ContactTransition(contactTransitionParcel);
-
+	public static final Parcelable.Creator<ProductTransition> CREATOR = new Parcelable.Creator<ProductTransition>() {
+		public ProductTransition createFromParcel(Parcel productTransitionParcel) {
+			return new ProductTransition(productTransitionParcel);
 		}
 
 		public ProductTransition[] newArray(int size) {
@@ -77,24 +72,26 @@ public class ProductTransition implements Parcelable {
 		}
 	};
 
-	public ContactTransition() {
+	public ProductTransition() {
+		this.count = -1;
 		this.id = new UUID(0, 0);
-		this.contactID = -1;
-		this.mimetype = "text";
-		this.data = new String[dataSize];
+		this.createdOn = new Date();
+		this.lookupCode = StringUtils.EMPTY;
 	}
 
-	public ContactTransition(Contact contact) {
-		this.id = contact.getId();
-		this.contactID = contact.getContactId();
-		this.mimetype = contact.getMimeType();
-		this.data = contact.getData();
+	public ProductTransition(Product product) {
+		this.id = product.getId();
+		this.count = product.getCount();
+		this.createdOn = product.getCreatedOn();
+		this.lookupCode = product.getLookupCode();
 	}
 
-	private ContactTransition(Parcel contactTransitionParcel) {
-		this.id = (new ByteToUUIDConverterCommand()).setValueToConvert(contactTransitionParcel.createByteArray()).execute();
-		this.contactID = contactTransitionParcel.readInt();
-		this.mimetype = contactTransitionParcel.readString();
-		contactTransitionParcel.readStringArray(this.data);
+	private ProductTransition(Parcel productTransitionParcel) {
+		this.id = (new ByteToUUIDConverterCommand()).setValueToConvert(productTransitionParcel.createByteArray()).execute();
+		this.lookupCode = productTransitionParcel.readString();
+		this.count = productTransitionParcel.readInt();
+
+		this.createdOn = new Date();
+		this.createdOn.setTime(productTransitionParcel.readLong());
 	}
 }

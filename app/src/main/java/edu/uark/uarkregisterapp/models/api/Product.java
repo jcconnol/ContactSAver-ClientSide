@@ -1,17 +1,14 @@
 package edu.uark.uarkregisterapp.models.api;
 
 import org.apache.commons.lang3.StringUtils;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.UUID;
-import java.util.Vector;
 
 import edu.uark.uarkregisterapp.models.api.fields.ProductFieldName;
 import edu.uark.uarkregisterapp.models.api.interfaces.ConvertToJsonInterface;
@@ -20,42 +17,38 @@ import edu.uark.uarkregisterapp.models.transition.ProductTransition;
 
 public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Product> {
 	private UUID id;
-	private Integer contactID;
-	private String mimetype;
-	private String [] data;
-	private Integer dataSize = 15;
-
 	public UUID getId() {
 		return this.id;
 	}
-	public Integer getContactId() {
-		return this.contactID;
-	}
-	public String getMimeType() { return this.mimetype; }
-	public String[] getData() { return this.data; }
-
-	public Contact setId(UUID id) {
+	public Product setId(UUID id) {
 		this.id = id;
 		return this;
 	}
 
-	public Contact setId(Integer contactID) {
-		this.contactID = contactID;
+	private String lookupCode;
+	public String getLookupCode() {
+		return this.lookupCode;
+	}
+	public Product setLookupCode(String lookupCode) {
+		this.lookupCode = lookupCode;
 		return this;
 	}
 
-	public Contact setMimeType(String mimetype) {
-		this.mimetype = mimetype;
+	private int count;
+	public int getCount() {
+		return this.count;
+	}
+	public Product setCount(int count) {
+		this.count = count;
 		return this;
 	}
 
-	public Contact setData(String[] data) {
-		this.data = new String[dataSize];
-		for(int i = 0; i < 15; i++) {
-			if(!this.data[i].equals(data[i])) {
-				this.data[i] = data[i];
-			}
-		}
+	private Date createdOn;
+	public Date getCreatedOn() {
+		return this.createdOn;
+	}
+	public Product setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
 		return this;
 	}
 
@@ -66,19 +59,15 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 			this.id = UUID.fromString(value);
 		}
 
-		this.contactID = rawJsonObject.optInt(ContactFieldName.CONTACT_ID.getFieldName());
-		this.mimetype = rawJsonObject.optString(ContactFieldName.MIMETYPE.getFieldName());
+		this.lookupCode = rawJsonObject.optString(ProductFieldName.LOOKUP_CODE.getFieldName());
+		this.count = rawJsonObject.optInt(ProductFieldName.COUNT.getFieldName());
 
-		JSONArray ja = rawJsonObject.optJSONArray(ContactFieldName.DATA.getFieldName());
-
+		value = rawJsonObject.optString(ProductFieldName.CREATED_ON.getFieldName());
 		if (!StringUtils.isBlank(value)) {
-			for(int i = 0; i < ja.length(); i++){
-				try {
-					JSONObject row = ja.getJSONObject(i);
-					data[i] = row.getString(ContactFieldName.DATA.getFieldName());
-				} catch (JSONException e){
-					e.printStackTrace();
-				}
+			try {
+				this.createdOn = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US).parse(value);
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
 		}
 
@@ -90,15 +79,10 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 		JSONObject jsonObject = new JSONObject();
 
 		try {
-			jsonObject.put(ContactFieldName.ID.getFieldName(), this.id.toString());
-			jsonObject.put(ContactFieldName.CONTACT_ID.getFieldName(), this.contactID);
-			jsonObject.put(ContactFieldName.MIMETYPE.getFieldName(), this.mimetype);
-			JSONArray jsonArray = new JSONArray();
-			for(int i = 0; i < dataSize; i++) {
-				jsonArray.put(data[i]);
-			}
-			jsonObject.put(ContactFieldName.DATA.getFieldName(), jsonArray);
-
+			jsonObject.put(ProductFieldName.ID.getFieldName(), this.id.toString());
+			jsonObject.put(ProductFieldName.LOOKUP_CODE.getFieldName(), this.lookupCode);
+			jsonObject.put(ProductFieldName.COUNT.getFieldName(), this.count);
+			jsonObject.put(ProductFieldName.CREATED_ON.getFieldName(), (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)).format(this.createdOn));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -106,18 +90,29 @@ public class Product implements ConvertToJsonInterface, LoadFromJsonInterface<Pr
 		return jsonObject;
 	}
 
-	public Contact() {
-
-		this.id = new UUID(0, 0);
-		this.contactID = -1;
-		this.mimetype = "text";
-		this.data = new String[dataSize];
+	public int compareTo(Product product1){
+		if(this.getCount() > product1.getCount()){
+			return 1;
+		}
+		else if(this.getCount() < product1.getCount()){
+			return -1;
+		}
+		else{
+			return 0;
+		}
 	}
 
-	public Contact(ContactTransition contactTransition) {
-		this.id = contactTransition.getId();
-		this.contactID = contactTransition.getContactId();
-		this.mimetype = contactTransition.getMimeType();
-		this.data = contactTransition.getData();
+	public Product() {
+		this.count = -1;
+		this.lookupCode = "";
+		this.id = new UUID(0, 0);
+		this.createdOn = new Date();
+	}
+
+	public Product(ProductTransition productTransition) {
+		this.id = productTransition.getId();
+		this.count = productTransition.getCount();
+		this.createdOn = productTransition.getCreatedOn();
+		this.lookupCode = productTransition.getLookupCode();
 	}
 }

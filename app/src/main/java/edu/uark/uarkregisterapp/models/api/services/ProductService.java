@@ -11,92 +11,92 @@ import java.util.List;
 import java.util.UUID;
 
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
-import edu.uark.uarkregisterapp.models.api.Contact;
+import edu.uark.uarkregisterapp.models.api.Product;
 import edu.uark.uarkregisterapp.models.api.enums.ApiObject;
 import edu.uark.uarkregisterapp.models.api.enums.ProductApiMethod;
 import edu.uark.uarkregisterapp.models.api.interfaces.PathElementInterface;
 
-public class ContactService extends BaseRemoteService {
-	public ApiResponse<Contact> getContact(UUID id) {
-		return this.readContactDetailsFromResponse(
-			this.<Contact>performGetRequest(
-				this.buildPath(id)
+public class ProductService extends BaseRemoteService {
+	public ApiResponse<Product> getProduct(UUID productId) {
+		return this.readProductDetailsFromResponse(
+			this.<Product>performGetRequest(
+				this.buildPath(productId)
 			)
 		);
 	}
 
-	public ApiResponse<Contact> getContactByContactId(String contactContactId) {
-		return this.readContactDetailsFromResponse(
-			this.<Contact>performGetRequest(
+	public ApiResponse<Product> getProductByLookupCode(String productLookupCode) {
+		return this.readProductDetailsFromResponse(
+			this.<Product>performGetRequest(
 				this.buildPath(
-					(new PathElementInterface[] { ContactApiMethod.BY_CONTACT_NAME })
-					, contactContactId
+					(new PathElementInterface[] { ProductApiMethod.BY_LOOKUP_CODE })
+					, productLookupCode
 				)
 			)
 		);
 	}
 
-	public ApiResponse<List<Contact>> getContacts() {
-		ApiResponse<List<Contact>> apiResponse = this.performGetRequest(
+	public ApiResponse<List<Product>> getProducts() {
+		ApiResponse<List<Product>> apiResponse = this.performGetRequest(
 			this.buildPath()
 		);
 
 		JSONArray rawJsonArray = this.rawResponseToJSONArray(apiResponse.getRawResponse());
 		if (rawJsonArray != null) {
-			ArrayList<Contact> contacts = new ArrayList<>(rawJsonArray.length());
+			ArrayList<Product> products = new ArrayList<>(rawJsonArray.length());
 			for (int i = 0; i < rawJsonArray.length(); i++) {
 				try {
-					contacts.add((new Contact()).loadFromJson(rawJsonArray.getJSONObject(i)));
+					products.add((new Product()).loadFromJson(rawJsonArray.getJSONObject(i)));
 				} catch (JSONException e) {
-					Log.d("GET Contacts", e.getMessage());
+					Log.d("GET PRODUCTS", e.getMessage());
 				}
 			}
 
-			apiResponse.setData(contacts);
+			apiResponse.setData(products);
 		} else {
-			apiResponse.setData(new ArrayList<Contact>(0));
+			apiResponse.setData(new ArrayList<Product>(0));
 		}
 
 		return apiResponse;
 	}
 
-	public ApiResponse<Contact> updateContact(Contact contact) {
-		return this.readContactDetailsFromResponse(
-			this.<Contact>performPutRequest(
-				this.buildPath(contact.getId())
-				, contact.convertToJson()
+	public ApiResponse<Product> updateProduct(Product product) {
+		return this.readProductDetailsFromResponse(
+			this.<Product>performPutRequest(
+				this.buildPath(product.getId())
+				, product.convertToJson()
 			)
 		);
 	}
 
-	public ApiResponse<Contact> createContact(Contact contact) {
-		return this.readContactDetailsFromResponse(
-			this.<Contact>performPostRequest(
+	public ApiResponse<Product> createProduct(Product product) {
+		return this.readProductDetailsFromResponse(
+			this.<Product>performPostRequest(
 				this.buildPath()
-				, contact.convertToJson()
+				, product.convertToJson()
 			)
 		);
 	}
 
-	public ApiResponse<String> deleteContact(UUID contactId) {
+	public ApiResponse<String> deleteProduct(UUID productId) {
 		return this.<String>performDeleteRequest(
-			this.buildPath(contactId)
+			this.buildPath(productId)
 		);
 	}
 
-	private ApiResponse<Contact> readContactDetailsFromResponse(ApiResponse<Contact> apiResponse) {
+	private ApiResponse<Product> readProductDetailsFromResponse(ApiResponse<Product> apiResponse) {
 		JSONObject rawJsonObject = this.rawResponseToJSONObject(
 			apiResponse.getRawResponse()
 		);
 
 		if (rawJsonObject != null) {
 			apiResponse.setData(
-				(new Contact()).loadFromJson(rawJsonObject)
+				(new Product()).loadFromJson(rawJsonObject)
 			);
 		}
 
 		return apiResponse;
 	}
 
-	public ContactService() { super(ApiObject.CONTACT); }
+	public ProductService() { super(ApiObject.PRODUCT); }
 }

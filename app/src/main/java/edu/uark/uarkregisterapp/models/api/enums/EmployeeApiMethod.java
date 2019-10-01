@@ -2,7 +2,7 @@ package edu.uark.uarkregisterapp.models.api.enums;
 
 import edu.uark.uarkregisterapp.models.api.interfaces.PathElementInterface;
 
-public enum UserApiMethod implements PathElementInterface {
+public enum EmployeeApiMethod implements PathElementInterface {
     NONE(""),
     LOGIN("login");
 
@@ -13,7 +13,7 @@ public enum UserApiMethod implements PathElementInterface {
 
     private String value;
 
-    UserApiMethod(String value) {
+    EmployeeApiMethod(String value) {
         this.value = value;
     }
 }
