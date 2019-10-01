@@ -270,6 +270,5 @@ abstract class BaseRemoteService {
 	private static final String ACCEPT_REQUEST_PROPERTY = "Accept";
 	private static final String JSON_PAYLOAD_TYPE = "application/json";
 	private static final String CONTENT_TYPE_REQUEST_PROPERTY = "Content-Type";
-	private static final String BASE_URL = "https://evening-peak-73250.herokuapp.com/api/";
-//	private static final String BASE_URL = "https://uarkregservnodejs-sprint2.herokuapp.com/api/";
+	private static final String BASE_URL = "https://contact-saver-service.herokuapp.com/api/";
 }

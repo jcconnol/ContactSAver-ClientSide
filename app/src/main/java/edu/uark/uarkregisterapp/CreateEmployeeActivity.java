@@ -50,11 +50,9 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 
         (new CreateEmployeeTask()).execute(
             (new Employee())
-                .setActive(true)
                 .setFirstName(this.getFirstNameEditText().getText().toString())
                 .setLastName(this.getLastNameEditText().getText().toString())
                 .setPassword(this.getPasswordEditText().getText().toString())
-                .setClassification(EmployeeClassification.GENERAL_MANAGER)
         );
     }
 

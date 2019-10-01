@@ -60,42 +60,6 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
         return this;
     }
 
-    private int sales;
-    public int getSales() {
-        return this.sales;
-    }
-    public Employee setSales(int sales) {
-        this.sales = sales;
-        return this;
-    }
-
-    private boolean active;
-    public boolean getActive() {
-        return this.active;
-    }
-    public Employee setActive(boolean active) {
-        this.active = active;
-        return this;
-    }
-
-    private EmployeeClassification classification;
-    public EmployeeClassification getClassification() {
-        return this.classification;
-    }
-    public Employee setClassification(EmployeeClassification classification) {
-        this.classification = classification;
-        return this;
-    }
-
-    private UUID managerId;
-    public UUID getManagerId() {
-        return this.managerId;
-    }
-    public Employee setManagerId(UUID managerId) {
-        this.managerId = managerId;
-        return this;
-    }
-
     private Date createdOn;
     public Date getCreatedOn() {
         return this.createdOn;
@@ -103,18 +67,6 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
     public Employee setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
         return this;
-    }
-
-    public int compareTo(Employee employee1){
-        if(this.getSales() > employee1.getSales()){
-            return 1;
-        }
-        else if(this.getSales() < employee1.getSales()){
-            return -1;
-        }
-        else{
-            return 0;
-        }
     }
 
     @Override
@@ -127,15 +79,6 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
         this.employeeId = rawJsonObject.optString(EmployeeFieldName.EMPLOYEE_ID.getFieldName());
         this.firstName = rawJsonObject.optString(EmployeeFieldName.FIRST_NAME.getFieldName());
         this.lastName = rawJsonObject.optString(EmployeeFieldName.FIRST_NAME.getFieldName());
-        this.active = rawJsonObject.optBoolean(EmployeeFieldName.ACTIVE.getFieldName());
-        this.classification = EmployeeClassification.mapValue(
-            rawJsonObject.optInt(EmployeeFieldName.CLASSIFICATION.getFieldName())
-        );
-
-        value = rawJsonObject.optString(EmployeeFieldName.MANAGER_ID.getFieldName());
-        if (!StringUtils.isBlank(value)) {
-            this.id = UUID.fromString(value);
-        }
 
         value = rawJsonObject.optString(EmployeeFieldName.CREATED_ON.getFieldName());
         if (!StringUtils.isBlank(value)) {
@@ -159,9 +102,6 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
             jsonObject.put(EmployeeFieldName.FIRST_NAME.getFieldName(), this.firstName);
             jsonObject.put(EmployeeFieldName.LAST_NAME.getFieldName(), this.lastName);
             jsonObject.put(EmployeeFieldName.PASSWORD.getFieldName(), this.password);
-            jsonObject.put(EmployeeFieldName.ACTIVE.getFieldName(), this.active);
-            jsonObject.put(EmployeeFieldName.CLASSIFICATION.getFieldName(), this.classification.getValue());
-            jsonObject.put(EmployeeFieldName.MANAGER_ID.getFieldName(), this.managerId.toString());
             jsonObject.put(EmployeeFieldName.CREATED_ON.getFieldName(), (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)).format(this.createdOn));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -171,14 +111,11 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
     }
 
     public Employee() {
-        this.active = false;
         this.id = new UUID(0, 0);
         this.createdOn = new Date();
-        this.managerId = new UUID(0, 0);
         this.lastName = StringUtils.EMPTY;
         this.password = StringUtils.EMPTY;
         this.firstName = StringUtils.EMPTY;
         this.employeeId = StringUtils.EMPTY;
-        this.classification = EmployeeClassification.NOT_DEFINED;
     }
 }
