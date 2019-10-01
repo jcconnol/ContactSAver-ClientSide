@@ -10,7 +10,7 @@ import java.util.UUID;
 
 import edu.uark.uarkregisterapp.commands.converters.ByteToUUIDConverterCommand;
 import edu.uark.uarkregisterapp.commands.converters.UUIDToByteConverterCommand;
-import edu.uark.uarkregisterapp.models.api.Employee;
+import edu.uark.uarkregisterapp.models.api.User;
 
 public class EmployeeTransition implements Parcelable {
     private UUID id;
@@ -100,7 +100,7 @@ public class EmployeeTransition implements Parcelable {
         this.employeeId = StringUtils.EMPTY;
     }
 
-    public EmployeeTransition(Employee employee) {
+    public EmployeeTransition(User employee) {
         this.id = employee.getId();
         this.lastName = employee.getLastName();
         this.password = employee.getPassword();

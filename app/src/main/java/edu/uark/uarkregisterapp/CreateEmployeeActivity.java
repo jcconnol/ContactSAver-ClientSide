@@ -14,8 +14,8 @@ import android.widget.EditText;
 import org.apache.commons.lang3.StringUtils;
 
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
-import edu.uark.uarkregisterapp.models.api.Employee;
-import edu.uark.uarkregisterapp.models.api.services.EmployeeService;
+import edu.uark.uarkregisterapp.models.api.User;
+import edu.uark.uarkregisterapp.models.api.services.UserService;
 import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 
 public class CreateEmployeeActivity extends AppCompatActivity {
@@ -49,7 +49,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
         }
 
         (new CreateEmployeeTask()).execute(
-            (new Employee())
+            (new User())
                 .setFirstName(this.getFirstNameEditText().getText().toString())
                 .setLastName(this.getLastNameEditText().getText().toString())
                 .setPassword(this.getPasswordEditText().getText().toString())
@@ -106,7 +106,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
             .show();
     }
 
-    private class CreateEmployeeTask extends AsyncTask<Employee, Void, ApiResponse<Employee>> {
+    private class CreateEmployeeTask extends AsyncTask<User, Void, ApiResponse<User>> {
         @Override
         protected void onPreExecute() {
             this.createEmployeeAlert = new AlertDialog.Builder(CreateEmployeeActivity.this)
@@ -116,17 +116,17 @@ public class CreateEmployeeActivity extends AppCompatActivity {
         }
 
         @Override
-        protected ApiResponse<Employee> doInBackground(Employee... employees) {
+        protected ApiResponse<User> doInBackground(User... employees) {
             if (employees.length > 0) {
-                return (new EmployeeService()).createEmployee(employees[0]);
+                return (new UserService()).createEmployee(employees[0]);
             } else {
-                return (new ApiResponse<Employee>())
+                return (new ApiResponse<User>())
                     .setValidResponse(false);
             }
         }
 
         @Override
-        protected void onPostExecute(ApiResponse<Employee> apiResponse) {
+        protected void onPostExecute(ApiResponse<User> apiResponse) {
             this.createEmployeeAlert.dismiss();
 
             if (!apiResponse.isValidResponse()) {

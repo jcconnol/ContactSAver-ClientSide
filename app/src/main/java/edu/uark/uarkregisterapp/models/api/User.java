@@ -10,26 +10,26 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
-import edu.uark.uarkregisterapp.models.api.fields.EmployeeFieldName;
+import edu.uark.uarkregisterapp.models.api.fields.UserFieldName;
 import edu.uark.uarkregisterapp.models.api.interfaces.ConvertToJsonInterface;
 import edu.uark.uarkregisterapp.models.api.interfaces.LoadFromJsonInterface;
 
-public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<Employee> {
+public class User implements ConvertToJsonInterface, LoadFromJsonInterface<User> {
     private UUID id;
     public UUID getId() {
         return this.id;
     }
-    public Employee setId(UUID id) {
+    public User setId(UUID id) {
         this.id = id;
         return this;
     }
 
-    private String employeeId;
+    private String userId;
     public String getEmployeeId() {
-        return this.employeeId;
+        return this.userId;
     }
-    public Employee setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
+    public User setEmployeeId(String employeeId) {
+        this.userId = employeeId;
         return this;
     }
 
@@ -37,7 +37,7 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
     public String getFirstName() {
         return this.firstName;
     }
-    public Employee setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -46,7 +46,7 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
     public String getLastName() {
         return this.lastName;
     }
-    public Employee setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -55,7 +55,7 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
     public String getPassword() {
         return this.password;
     }
-    public Employee setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -64,23 +64,23 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
     public Date getCreatedOn() {
         return this.createdOn;
     }
-    public Employee setCreatedOn(Date createdOn) {
+    public User setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
         return this;
     }
 
     @Override
-    public Employee loadFromJson(JSONObject rawJsonObject) {
-        String value = rawJsonObject.optString(EmployeeFieldName.ID.getFieldName());
+    public User loadFromJson(JSONObject rawJsonObject) {
+        String value = rawJsonObject.optString(UserFieldName.ID.getFieldName());
         if (!StringUtils.isBlank(value)) {
             this.id = UUID.fromString(value);
         }
 
-        this.employeeId = rawJsonObject.optString(EmployeeFieldName.EMPLOYEE_ID.getFieldName());
-        this.firstName = rawJsonObject.optString(EmployeeFieldName.FIRST_NAME.getFieldName());
-        this.lastName = rawJsonObject.optString(EmployeeFieldName.FIRST_NAME.getFieldName());
+        this.employeeId = rawJsonObject.optString(UserFieldName.EMPLOYEE_ID.getFieldName());
+        this.firstName = rawJsonObject.optString(UserFieldName.FIRST_NAME.getFieldName());
+        this.lastName = rawJsonObject.optString(UserFieldName.FIRST_NAME.getFieldName());
 
-        value = rawJsonObject.optString(EmployeeFieldName.CREATED_ON.getFieldName());
+        value = rawJsonObject.optString(UserFieldName.CREATED_ON.getFieldName());
         if (!StringUtils.isBlank(value)) {
             try {
                 this.createdOn = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US).parse(value);
@@ -97,12 +97,12 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.put(EmployeeFieldName.ID.getFieldName(), this.id.toString());
-            jsonObject.put(EmployeeFieldName.EMPLOYEE_ID.getFieldName(), this.employeeId);
-            jsonObject.put(EmployeeFieldName.FIRST_NAME.getFieldName(), this.firstName);
-            jsonObject.put(EmployeeFieldName.LAST_NAME.getFieldName(), this.lastName);
-            jsonObject.put(EmployeeFieldName.PASSWORD.getFieldName(), this.password);
-            jsonObject.put(EmployeeFieldName.CREATED_ON.getFieldName(), (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)).format(this.createdOn));
+            jsonObject.put(UserFieldName.ID.getFieldName(), this.id.toString());
+            jsonObject.put(UserFieldName.USER_ID.getFieldName(), this.employeeId);
+            jsonObject.put(UserFieldName.FIRST_NAME.getFieldName(), this.firstName);
+            jsonObject.put(UserFieldName.LAST_NAME.getFieldName(), this.lastName);
+            jsonObject.put(UserFieldName.PASSWORD.getFieldName(), this.password);
+            jsonObject.put(UserFieldName.CREATED_ON.getFieldName(), (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)).format(this.createdOn));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -110,7 +110,7 @@ public class Employee implements ConvertToJsonInterface, LoadFromJsonInterface<E
         return jsonObject;
     }
 
-    public Employee() {
+    public User() {
         this.id = new UUID(0, 0);
         this.createdOn = new Date();
         this.lastName = StringUtils.EMPTY;

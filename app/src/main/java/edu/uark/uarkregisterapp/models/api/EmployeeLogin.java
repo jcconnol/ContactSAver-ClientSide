@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.uark.uarkregisterapp.models.api.fields.EmployeeLoginFieldName;
+import edu.uark.uarkregisterapp.models.api.fields.UserLoginFieldName;
 import edu.uark.uarkregisterapp.models.api.interfaces.ConvertToJsonInterface;
 
 public class EmployeeLogin implements ConvertToJsonInterface {
@@ -31,8 +31,8 @@ public class EmployeeLogin implements ConvertToJsonInterface {
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.put(EmployeeLoginFieldName.EMPLOYEE_ID.getFieldName(), this.employeeId);
-            jsonObject.put(EmployeeLoginFieldName.PASSWORD.getFieldName(), this.password);
+            jsonObject.put(UserLoginFieldName.EMPLOYEE_ID.getFieldName(), this.employeeId);
+            jsonObject.put(UserLoginFieldName.PASSWORD.getFieldName(), this.password);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,5 @@
 package edu.uark.uarkregisterapp;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,11 +10,10 @@ import android.widget.EditText;
 
 import org.apache.commons.lang3.StringUtils;
 
-import edu.uark.uarkregisterapp.models.api.ActiveEmployeeCounts;
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
-import edu.uark.uarkregisterapp.models.api.Employee;
+import edu.uark.uarkregisterapp.models.api.User;
 import edu.uark.uarkregisterapp.models.api.EmployeeLogin;
-import edu.uark.uarkregisterapp.models.api.services.EmployeeService;
+import edu.uark.uarkregisterapp.models.api.services.UserService;
 import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
 
 public class LandingActivity extends AppCompatActivity {
@@ -71,7 +69,7 @@ public class LandingActivity extends AppCompatActivity {
 		return (EditText) this.findViewById(R.id.edit_text_password);
 	}
 
-	private class SignInTask extends AsyncTask<EmployeeLogin, Void, ApiResponse<Employee>> {
+	private class SignInTask extends AsyncTask<EmployeeLogin, Void, ApiResponse<User>> {
 		@Override
 		protected void onPreExecute() {
 			this.signInAlert = new AlertDialog.Builder(LandingActivity.this)
@@ -81,17 +79,17 @@ public class LandingActivity extends AppCompatActivity {
 		}
 
 		@Override
-		protected ApiResponse<Employee> doInBackground(EmployeeLogin... employeeLogins) {
+		protected ApiResponse<User> doInBackground(EmployeeLogin... employeeLogins) {
 			if (employeeLogins.length > 0) {
-				return (new EmployeeService()).logIn(employeeLogins[0]);
+				return (new UserService()).logIn(employeeLogins[0]);
 			} else {
-				return (new ApiResponse<Employee>())
+				return (new ApiResponse<User>())
 					.setValidResponse(false);
 			}
 		}
 
 		@Override
-		protected void onPostExecute(ApiResponse<Employee> apiResponse) {
+		protected void onPostExecute(ApiResponse<User> apiResponse) {
 			this.signInAlert.dismiss();
 
 			if (!apiResponse.isValidResponse()) {
