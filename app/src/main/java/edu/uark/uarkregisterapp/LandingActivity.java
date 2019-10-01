@@ -29,8 +29,10 @@ public class LandingActivity extends AppCompatActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+	}
 
-		(new QueryActiveEmployeeCountsTask()).execute();
+	public void createEmployeeButtonOnClick(View view){
+		startActivity(new Intent(LandingActivity.this, CreateEmployeeActivity.class));
 	}
 
 	public void signInButtonOnClick(View view) {
@@ -67,42 +69,6 @@ public class LandingActivity extends AppCompatActivity {
 
 	private EditText getPasswordEditText() {
 		return (EditText) this.findViewById(R.id.edit_text_password);
-	}
-
-	private class QueryActiveEmployeeCountsTask extends AsyncTask<Void, Void, ApiResponse<ActiveEmployeeCounts>> {
-		@Override
-		protected ApiResponse<ActiveEmployeeCounts> doInBackground(Void... params) {
-			return (new EmployeeService()).getActiveEmployeeCounts();
-		}
-
-		@Override
-		protected void onPostExecute(ApiResponse<ActiveEmployeeCounts> apiResponse) {
-			if (apiResponse.isValidResponse() && this.activeEmployeeExists(apiResponse.getData())) {
-				return;
-			}
-
-			new AlertDialog.Builder(LandingActivity.this)
-				.setMessage(R.string.alert_dialog_no_employees_exist)
-				.setPositiveButton(
-					R.string.button_ok,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-							startActivity(new Intent(getApplicationContext(), CreateEmployeeActivity.class));
-
-							dialog.dismiss();
-						}
-					}
-				)
-				.create()
-				.show();
-		}
-
-		private boolean activeEmployeeExists(ActiveEmployeeCounts activeEmployeeCounts) {
-			return (
-				(activeEmployeeCounts.getActiveCashierCount() > 0)
-				|| (activeEmployeeCounts.getActiveShiftManagerCount() > 0)
-				|| (activeEmployeeCounts.getActiveGeneralManagerCount() > 0));
-		}
 	}
 
 	private class SignInTask extends AsyncTask<EmployeeLogin, Void, ApiResponse<Employee>> {

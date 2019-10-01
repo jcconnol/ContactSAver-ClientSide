@@ -28,17 +28,6 @@ public class EmployeeService extends BaseRemoteService {
         );
     }
 
-    public ApiResponse<ActiveEmployeeCounts> getActiveEmployeeCounts() {
-        return this.readActiveCountsDetailsFromResponse(
-            this.<ActiveEmployeeCounts>performGetRequest(
-                this.buildPath(
-                    (new PathElementInterface[] { EmployeeApiMethod.ACTIVE_COUNTS })
-                    , Integer.toString(EmployeeClassification.NOT_DEFINED.getValue())
-                )
-            )
-        );
-    }
-
     public ApiResponse<List<Employee>> getEmployees() {
         ApiResponse<List<Employee>> apiResponse = this.performGetRequest(
                 this.buildPath()
@@ -101,12 +90,6 @@ public class EmployeeService extends BaseRemoteService {
     private ApiResponse<Employee> readEmployeeDetailsFromResponse(ApiResponse<Employee> apiResponse) {
         return this.readDetailsFromResponse(
             apiResponse, (new Employee())
-        );
-    }
-
-    private ApiResponse<ActiveEmployeeCounts> readActiveCountsDetailsFromResponse(ApiResponse<ActiveEmployeeCounts> apiResponse) {
-        return this.readDetailsFromResponse(
-            apiResponse, (new ActiveEmployeeCounts())
         );
     }
 
