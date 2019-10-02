@@ -16,14 +16,14 @@ import org.apache.commons.lang3.StringUtils;
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.User;
 import edu.uark.uarkregisterapp.models.api.services.UserService;
-import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
+import edu.uark.uarkregisterapp.models.transition.UserTransition;
 
-public class CreateEmployeeActivity extends AppCompatActivity {
+public class CreateUserActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_employee);
+        setContentView(R.layout.activity_create_user);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         ActionBar actionBar = this.getSupportActionBar();
@@ -48,7 +48,7 @@ public class CreateEmployeeActivity extends AppCompatActivity {
             return;
         }
 
-        (new CreateEmployeeTask()).execute(
+        (new CreateUserTask()).execute(
             (new User())
                 .setFirstName(this.getFirstNameEditText().getText().toString())
                 .setLastName(this.getLastNameEditText().getText().toString())
@@ -57,41 +57,41 @@ public class CreateEmployeeActivity extends AppCompatActivity {
     }
 
     private EditText getFirstNameEditText() {
-        return (EditText) this.findViewById(R.id.edit_text_employee_create_first_name);
+        return (EditText) this.findViewById(R.id.edit_text_user_create_first_name);
     }
 
     private EditText getLastNameEditText() {
-        return (EditText) this.findViewById(R.id.edit_text_employee_create_last_name);
+        return (EditText) this.findViewById(R.id.edit_text_user_create_last_name);
     }
 
     private EditText getPasswordEditText() {
-        return (EditText) this.findViewById(R.id.edit_text_employee_create_password);
+        return (EditText) this.findViewById(R.id.edit_text_user_create_password);
     }
 
     private EditText getPasswordConfirmEditText() {
-        return (EditText) this.findViewById(R.id.edit_text_employee_create_password_confirm);
+        return (EditText) this.findViewById(R.id.edit_text_user_create_password_confirm);
     }
 
     private boolean validateInput() {
         boolean validInput = true;
 
         if (StringUtils.isBlank(this.getFirstNameEditText().getText().toString())) {
-            this.displayValidationAlert(R.string.alert_dialog_employee_create_validation_first_name);
+            this.displayValidationAlert(R.string.alert_dialog_user_create_validation_first_name);
             this.getFirstNameEditText().requestFocus();
             validInput = false;
         }
         if (validInput && StringUtils.isBlank(this.getLastNameEditText().getText().toString())) {
-            this.displayValidationAlert(R.string.alert_dialog_employee_create_validation_last_name);
+            this.displayValidationAlert(R.string.alert_dialog_user_create_validation_last_name);
             this.getLastNameEditText().requestFocus();
             validInput = false;
         }
         if (validInput && StringUtils.isBlank(this.getPasswordEditText().getText().toString())) {
-            this.displayValidationAlert(R.string.alert_dialog_employee_create_validation_password);
+            this.displayValidationAlert(R.string.alert_dialog_user_create_validation_password);
             this.getLastNameEditText().requestFocus();
             validInput = false;
         }
         if (validInput && !this.getPasswordEditText().getText().toString().equals(this.getPasswordConfirmEditText().getText().toString())) {
-            this.displayValidationAlert(R.string.alert_dialog_employee_create_validation_password_invalid);
+            this.displayValidationAlert(R.string.alert_dialog_user_create_validation_password_invalid);
             this.getLastNameEditText().requestFocus();
             validInput = false;
         }
@@ -106,19 +106,19 @@ public class CreateEmployeeActivity extends AppCompatActivity {
             .show();
     }
 
-    private class CreateEmployeeTask extends AsyncTask<User, Void, ApiResponse<User>> {
+    private class CreateUserTask extends AsyncTask<User, Void, ApiResponse<User>> {
         @Override
         protected void onPreExecute() {
-            this.createEmployeeAlert = new AlertDialog.Builder(CreateEmployeeActivity.this)
-                .setMessage(R.string.alert_dialog_employee_create)
+            this.createUserAlert = new AlertDialog.Builder(CreateUserActivity.this)
+                .setMessage(R.string.alert_dialog_user_create)
                 .create();
-            this.createEmployeeAlert.show();
+            this.createUserAlert.show();
         }
 
         @Override
-        protected ApiResponse<User> doInBackground(User... employees) {
-            if (employees.length > 0) {
-                return (new UserService()).createEmployee(employees[0]);
+        protected ApiResponse<User> doInBackground(User... users) {
+            if (users.length > 0) {
+                return (new UserService()).createUser(users[0]);
             } else {
                 return (new ApiResponse<User>())
                     .setValidResponse(false);
@@ -127,11 +127,11 @@ public class CreateEmployeeActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ApiResponse<User> apiResponse) {
-            this.createEmployeeAlert.dismiss();
+            this.createUserAlert.dismiss();
 
             if (!apiResponse.isValidResponse()) {
-                new AlertDialog.Builder(CreateEmployeeActivity.this)
-                    .setMessage(R.string.alert_dialog_employee_create_failed)
+                new AlertDialog.Builder(CreateUserActivity.this)
+                    .setMessage(R.string.alert_dialog_user_create_failed)
                     .create()
                     .show();
                 return;
@@ -140,13 +140,13 @@ public class CreateEmployeeActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
             intent.putExtra(
-                getString(R.string.intent_extra_employee)
-                , new EmployeeTransition(apiResponse.getData())
+                getString(R.string.intent_extra_user)
+                , new UserTransition(apiResponse.getData())
             );
 
             startActivity(intent);
         }
 
-        private AlertDialog createEmployeeAlert;
+        private AlertDialog createUserAlert;
     }
 }

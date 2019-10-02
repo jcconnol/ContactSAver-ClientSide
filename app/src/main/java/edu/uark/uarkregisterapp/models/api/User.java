@@ -25,11 +25,11 @@ public class User implements ConvertToJsonInterface, LoadFromJsonInterface<User>
     }
 
     private String userId;
-    public String getEmployeeId() {
+    public String getUserId() {
         return this.userId;
     }
-    public User setEmployeeId(String employeeId) {
-        this.userId = employeeId;
+    public User setUserId(String userId) {
+        this.userId = userId;
         return this;
     }
 
@@ -76,7 +76,7 @@ public class User implements ConvertToJsonInterface, LoadFromJsonInterface<User>
             this.id = UUID.fromString(value);
         }
 
-        this.employeeId = rawJsonObject.optString(UserFieldName.EMPLOYEE_ID.getFieldName());
+        this.userId = rawJsonObject.optString(UserFieldName.USER_ID.getFieldName());
         this.firstName = rawJsonObject.optString(UserFieldName.FIRST_NAME.getFieldName());
         this.lastName = rawJsonObject.optString(UserFieldName.FIRST_NAME.getFieldName());
 
@@ -98,7 +98,7 @@ public class User implements ConvertToJsonInterface, LoadFromJsonInterface<User>
 
         try {
             jsonObject.put(UserFieldName.ID.getFieldName(), this.id.toString());
-            jsonObject.put(UserFieldName.USER_ID.getFieldName(), this.employeeId);
+            jsonObject.put(UserFieldName.USER_ID.getFieldName(), this.userId);
             jsonObject.put(UserFieldName.FIRST_NAME.getFieldName(), this.firstName);
             jsonObject.put(UserFieldName.LAST_NAME.getFieldName(), this.lastName);
             jsonObject.put(UserFieldName.PASSWORD.getFieldName(), this.password);
@@ -116,6 +116,6 @@ public class User implements ConvertToJsonInterface, LoadFromJsonInterface<User>
         this.lastName = StringUtils.EMPTY;
         this.password = StringUtils.EMPTY;
         this.firstName = StringUtils.EMPTY;
-        this.employeeId = StringUtils.EMPTY;
+        this.userId = StringUtils.EMPTY;
     }
 }

@@ -22,8 +22,8 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CreateEmployeeActivity"
-            android:label="@string/title_activity_create_employee"
+            android:name=".CreateUserActivity"
+            android:label="@string/title_activity_create_user"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

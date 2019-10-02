@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.User;
+import edu.uark.uarkregisterapp.models.api.UserLogin;
 import edu.uark.uarkregisterapp.models.api.enums.ApiObject;
 import edu.uark.uarkregisterapp.models.api.enums.UserApiMethod;
 import edu.uark.uarkregisterapp.models.api.interfaces.LoadFromJsonInterface;

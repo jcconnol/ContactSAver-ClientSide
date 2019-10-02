@@ -12,9 +12,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import edu.uark.uarkregisterapp.models.api.ApiResponse;
 import edu.uark.uarkregisterapp.models.api.User;
-import edu.uark.uarkregisterapp.models.api.EmployeeLogin;
+import edu.uark.uarkregisterapp.models.api.UserLogin;
 import edu.uark.uarkregisterapp.models.api.services.UserService;
-import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
+import edu.uark.uarkregisterapp.models.transition.UserTransition;
 
 public class LandingActivity extends AppCompatActivity {
 
@@ -29,24 +29,24 @@ public class LandingActivity extends AppCompatActivity {
 		super.onStart();
 	}
 
-	public void createEmployeeButtonOnClick(View view){
-		startActivity(new Intent(LandingActivity.this, CreateEmployeeActivity.class));
+	public void createUserButtonOnClick(View view){
+		startActivity(new Intent(LandingActivity.this, CreateUserActivity.class));
 	}
 
 	public void signInButtonOnClick(View view) {
-		if (StringUtils.isBlank(this.getEmployeeIdEditText().getText().toString())) {
+		if (StringUtils.isBlank(this.getUserIdEditText().getText().toString())) {
 			new AlertDialog.Builder(this)
-				.setMessage(R.string.alert_dialog_employee_id_empty)
+				.setMessage(R.string.alert_dialog_user_id_empty)
 				.create()
 				.show();
-			this.getEmployeeIdEditText().requestFocus();
+			this.getUserIdEditText().requestFocus();
 
 			return;
 		}
 
 		if (StringUtils.isBlank(this.getPasswordEditText().getText().toString())) {
 			new AlertDialog.Builder(this)
-				.setMessage(R.string.alert_dialog_employee_password_empty)
+				.setMessage(R.string.alert_dialog_user_password_empty)
 				.create()
 				.show();
 			this.getPasswordEditText().requestFocus();
@@ -55,21 +55,21 @@ public class LandingActivity extends AppCompatActivity {
 		}
 
 		(new SignInTask()).execute(
-			(new EmployeeLogin())
-				.setEmployeeId(this.getEmployeeIdEditText().getText().toString())
+			(new UserLogin())
+				.setUserId(this.getUserIdEditText().getText().toString())
 				.setPassword(this.getPasswordEditText().getText().toString())
 		);
 	}
 
-	private EditText getEmployeeIdEditText() {
-		return (EditText) this.findViewById(R.id.edit_text_employee_id);
+	private EditText getUserIdEditText() {
+		return (EditText) this.findViewById(R.id.edit_text_user_id);
 	}
 
 	private EditText getPasswordEditText() {
 		return (EditText) this.findViewById(R.id.edit_text_password);
 	}
 
-	private class SignInTask extends AsyncTask<EmployeeLogin, Void, ApiResponse<User>> {
+	private class SignInTask extends AsyncTask<UserLogin, Void, ApiResponse<User>> {
 		@Override
 		protected void onPreExecute() {
 			this.signInAlert = new AlertDialog.Builder(LandingActivity.this)
@@ -79,9 +79,9 @@ public class LandingActivity extends AppCompatActivity {
 		}
 
 		@Override
-		protected ApiResponse<User> doInBackground(EmployeeLogin... employeeLogins) {
-			if (employeeLogins.length > 0) {
-				return (new UserService()).logIn(employeeLogins[0]);
+		protected ApiResponse<User> doInBackground(UserLogin... userLogins) {
+			if (userLogins.length > 0) {
+				return (new UserService()).logIn(userLogins[0]);
 			} else {
 				return (new ApiResponse<User>())
 					.setValidResponse(false);
@@ -94,7 +94,7 @@ public class LandingActivity extends AppCompatActivity {
 
 			if (!apiResponse.isValidResponse()) {
 				new AlertDialog.Builder(LandingActivity.this)
-					.setMessage(R.string.alert_dialog_employee_sign_in_failed)
+					.setMessage(R.string.alert_dialog_user_sign_in_failed)
 					.create()
 					.show();
 				return;
@@ -103,8 +103,8 @@ public class LandingActivity extends AppCompatActivity {
 			Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
 			intent.putExtra(
-				getString(R.string.intent_extra_employee)
-				, new EmployeeTransition(apiResponse.getData())
+				getString(R.string.intent_extra_user)
+				, new UserTransition(apiResponse.getData())
 			);
 
 			startActivity(intent);

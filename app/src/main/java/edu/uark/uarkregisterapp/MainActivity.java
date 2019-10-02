@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import edu.uark.uarkregisterapp.models.transition.EmployeeTransition;
+import edu.uark.uarkregisterapp.models.transition.UserTransition;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -18,20 +18,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-        this.employeeTransition = this.getIntent().getParcelableExtra(this.getString(R.string.intent_extra_employee));
+        this.userTransition = this.getIntent().getParcelableExtra(this.getString(R.string.intent_extra_user));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        this.getEmployeeWelcomeTextView().setText("Welcome " + this.employeeTransition.getFirstName() + " (" + this.employeeTransition.getEmployeeId() + ")!");
+        this.getUserWelcomeTextView().setText("Welcome " + this.userTransition.getFirstName() + " (" + this.userTransition.getUserId() + ")!");
     }
 
-    public void createEmployeeButtonOnClick(View view) {
+    public void createUserButtonOnClick(View view) {
         //this.displayFunctionalityNotAvailableDialog();
 
-        this.startActivity(new Intent(getApplicationContext(), CreateEmployeeActivity.class));
+        this.startActivity(new Intent(getApplicationContext(), CreateUserActivity.class));
 
     }
 
@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(new Intent(getApplicationContext(), LandingActivity.class));
     }
 
-    private TextView getEmployeeWelcomeTextView() {
-        return (TextView)this.findViewById(R.id.text_view_employee_welcome);
+    private TextView getUserWelcomeTextView() {
+        return (TextView)this.findViewById(R.id.text_view_user_welcome);
     }
 
     private void displayFunctionalityNotAvailableDialog() {
@@ -58,5 +58,5 @@ public class MainActivity extends AppCompatActivity {
                 show();
     }
 
-    private EmployeeTransition employeeTransition;
+    private UserTransition userTransition;
 }
